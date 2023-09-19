@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="166" height="83" viewBox="0 0 166 83">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_50" data-name="Rectangle 50" width="82" height="83" transform="translate(0 0.079)" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="Rectangle_49" data-name="Rectangle 49" width="82" height="83" transform="translate(0 0.079)" fill="rgba(0,0,0,0)"/>
+    </clipPath>
+  </defs>
+  <g id="nav-bar-menu-logo" transform="translate(-36)">
+    <g id="background-for-logo-menu" transform="translate(36)" style="isolation: isolate">
+      <g id="Rectangle_51" data-name="Rectangle 51" fill="#297511" stroke="#7a6b54" stroke-width="5" opacity="0.7">
+        <rect width="166" height="83" rx="9" stroke="none"/>
+        <rect x="2.5" y="2.5" width="161" height="78" rx="6.5" fill="none"/>
+      </g>
+    </g>
+    <rect id="Rectangle_66" data-name="Rectangle 66" width="81" height="74" transform="translate(79 5)" fill="#fff"/>
+    <g id="blue-a-with-diamond-logo" transform="translate(78)" style="isolation: isolate">
+      <g id="Group_53" data-name="Group 53" transform="translate(0 -0.079)" clip-path="url(#clip-path)">
+        <g id="Group_52" data-name="Group 52">
+          <g id="Group_51" data-name="Group 51" clip-path="url(#clip-path-2)">
+            <g id="Group_50" data-name="Group 50" opacity="0.7">
+              <g id="Group_49" data-name="Group 49">
+                <g id="Group_48" data-name="Group 48" clip-path="url(#clip-path-2)">
+                  <path id="Path_12" data-name="Path 12" d="M75.726,82.984H6.712A6.735,6.735,0,0,1,0,76.227V6.757A6.735,6.735,0,0,1,6.712,0H75.726a6.735,6.735,0,0,1,6.712,6.757v69.47a6.735,6.735,0,0,1-6.712,6.757" transform="translate(0 -0.145)" fill="#fff"/>
+                </g>
+              </g>
+            </g>
+            <path id="Path_13" data-name="Path 13" d="M37.813,68.3l-.77-5.7H25.986l-.767,5.7H3.487L18,2.317h27.03L59.542,68.3ZM32.359,26.81a42.923,42.923,0,0,1-.46-6.016h-.767a42.953,42.953,0,0,1-.463,6.016L28.136,42.963h6.757Z" transform="translate(7.569 4.933)" fill="#2525c2"/>
+            <path id="Path_14" data-name="Path 14" d="M.072.076,23.035,0l-.072,21.767L0,21.842Z" transform="translate(25.774 41.86) rotate(-45)" fill="#2525c2"/>
+            <path id="Path_15" data-name="Path 15" d="M.046.046,13.9,0l-.046,13.858L0,13.9Z" transform="translate(29.06 32.763) rotate(-45)" fill="#fff"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

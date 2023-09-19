@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="192.058" height="212.969" viewBox="0 0 192.058 212.969">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_19" data-name="Rectangle 19" width="142" height="157" fill="none" stroke="#297511" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-4">
+      <rect id="Rectangle_15" data-name="Rectangle 15" width="74.109" height="80" transform="translate(37.313 75)" fill="none" stroke="#297511" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-5">
+      <rect id="Rectangle_16" data-name="Rectangle 16" width="31.19" height="4" transform="translate(58.77 75)" fill="none" stroke="#297511" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="custom-flask-plant-graphic" transform="translate(-34.315 -161.007)">
+    <g id="Group_69" data-name="Group 69" transform="translate(35.622 149.407)" opacity="0.46">
+      <rect id="Rectangle_40" data-name="Rectangle 40" width="187.058" height="207.969" transform="translate(1.193 14.1)" fill="#53c230" stroke="#297511" stroke-miterlimit="10" stroke-width="5"/>
+    </g>
+    <g id="Group_23" data-name="Group 23" transform="translate(60 190)">
+      <g id="Group_22" data-name="Group 22" clip-path="url(#clip-path)">
+        <g id="Group_21" data-name="Group 21">
+          <g id="Group_20" data-name="Group 20" clip-path="url(#clip-path)">
+            <g id="Group_13" data-name="Group 13" opacity="0.7">
+              <g id="Group_12" data-name="Group 12">
+                <g id="Group_11" data-name="Group 11" clip-path="url(#clip-path)">
+                  <rect id="Rectangle_13" data-name="Rectangle 13" width="142" height="157" fill="#2525c2" stroke="#297511" stroke-width="1"/>
+                </g>
+              </g>
+            </g>
+            <g id="Group_16" data-name="Group 16" opacity="0.9">
+              <g id="Group_15" data-name="Group 15">
+                <g id="Group_14" data-name="Group 14" clip-path="url(#clip-path-4)">
+                  <path id="Path_1" data-name="Path 1" d="M97.34,153H51.39a12.064,12.064,0,0,1-11.4-16.02L60.77,77H87.96l20.79,59.98A12.074,12.074,0,0,1,97.34,153" fill="#52c230" stroke="#297511" stroke-width="1"/>
+                  <path id="Path_2" data-name="Path 2" d="M97.34,153H51.39a12.064,12.064,0,0,1-11.4-16.02L60.77,77H87.96l20.79,59.98A12.074,12.074,0,0,1,97.34,153Z" fill="none" stroke="#297511" stroke-miterlimit="10" stroke-width="4"/>
+                </g>
+              </g>
+            </g>
+            <g id="Group_19" data-name="Group 19" opacity="0.9">
+              <g id="Group_18" data-name="Group 18">
+                <g id="Group_17" data-name="Group 17" clip-path="url(#clip-path-5)">
+                  <line id="Line_1" data-name="Line 1" x1="27.19" transform="translate(60.77 77)" fill="none" stroke="#297511" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"/>
+                </g>
+              </g>
+            </g>
+            <path id="Path_3" data-name="Path 3" d="M61,137a80.712,80.712,0,0,0,15-36c.747-5.085,7.9-48-18-64-14.142-8.736-30.976-5.033-38-3" fill="none" stroke="#297511" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"/>
+            <path id="Path_4" data-name="Path 4" d="M99,132.5A12.5,12.5,0,1,1,86.5,120,12.5,12.5,0,0,1,99,132.5" fill="#796b54" stroke="#297511" stroke-width="1"/>
+            <path id="Path_5" data-name="Path 5" d="M75.5,63.5c7.543-8.035,18.173-11.2,27-8a22.674,22.674,0,0,1,11,9" fill="none" stroke="#297511" stroke-miterlimit="10" stroke-width="3"/>
+            <path id="Path_6" data-name="Path 6" d="M34.917,51s-1.259-1.463,2.121-5.773c2.95-3.764,12.4-10.211,14.744-11.786a2.058,2.058,0,0,0,.664-.791c.392-.762,1.95-2.168,8.138-1.232C68.834,32.667,78,29,78,29" fill="none" stroke="#297511" stroke-linecap="round" stroke-miterlimit="10" stroke-width="4"/>
+            <path id="Path_7" data-name="Path 7" d="M48.065,58.809,30.376,78.946a3.14,3.14,0,0,1-5.354-1.129l-8.348-26.5a3.141,3.141,0,0,1,3.741-3.994l26.036,6.363a3.141,3.141,0,0,1,1.614,5.123" fill="#c2462e" stroke="#297511" stroke-width="1"/>
+            <rect id="Rectangle_17" data-name="Rectangle 17" width="25.788" height="25.788" transform="translate(90.023 28.1) rotate(-43.566)" fill="#fff" stroke="#297511" stroke-width="1"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
