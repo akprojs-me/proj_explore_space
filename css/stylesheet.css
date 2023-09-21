@@ -1,0 +1,125 @@
+
+
+* {
+    box-sizing: border-box;
+}
+
+nav {
+  top: 0;
+  font-family: Arial, sans-serif;
+  font-size: 40px;
+  display: flex;
+  background-color: #caddc4;
+  width: 100%;
+  position: fixed;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 0 50px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #2525C2;
+}
+
+#nav-bar-menu-logo {
+  margin-left: 20px;
+}
+
+nav li {
+  display: inline-block;
+  text-align: center;
+  margin: 0;
+  padding: 20px 10px 0 10px;
+}
+
+nav a:active, nav a:hover  {
+  background-color: #AFE29F;
+}
+
+.main {
+  margin-top: 80px;
+  padding-top: 20px;
+}
+
+hr.section_break {
+  border-top: 8px solid #707070;
+  margin: 0;
+}
+
+#header_image {
+  float: left;
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+
+.clearfix {
+  overflow: auto;
+}
+
+.body_text {
+  font-family: Tahoma, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+h1, h2 {
+  font-family: Georgia, serif;
+}
+
+.page_heading {
+  padding-left: 15%;
+  padding-top: 20px;
+}
+
+header h1 {
+  color: #C2462E;
+  font-size: 48px;
+}
+
+header h2 {
+  color: #297511;
+  font-size: 32px;
+}
+
+#map_graphic {
+  float: right;
+  width: 20%;
+  margin: 40px 0;
+}
+
+#mystery_box {
+  float: left;
+  margin: 5px 120px 0px 40px;
+}
+
+.section_header {
+  font-size: 32px;
+}
+
+#possibilities_header {
+  text-align: left;
+}
+
+#demos_header {
+  text-align: center;
+}
+
+#demo_text {
+  margin: 5% 20% 0% 25%;
+}
+
+footer {
+  background-color: rgb(122, 107, 84, 0.38);
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: black;
+  text-align: center;
+  height: 50px;
+  font-weight: 600;
+  padding-top: 10px;
+}
