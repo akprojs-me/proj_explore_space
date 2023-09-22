@@ -1,190 +1,190 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 .top_nav {
-    background-color: #caddc4;
-    box-shadow: 1px 1px 5px 0px var(--gray);
-    position: sticky;
-    top: 0;
-    width: 100%;
+  background-color: #caddc4;
+  box-shadow: 1px 1px 5px 0px var(--gray);
+  position: sticky;
+  top: 0;
+  width: 100%;
 }
 
 #nav-bar-menu-logo {
-    margin-left: 1em;
-    height: 3em;
+  margin-left: 1em;
+  height: 3em;
 }
 
 .nav {
-    width: 100%;
-    position: fixed;
-    background-color: #caddc4;
-    overflow: hidden;
-    font-family: Roboto, sans-serif;
-    font-size: 1.5em;
+  width: 100%;
+  position: fixed;
+  background-color: #caddc4;
+  overflow: hidden;
+  font-family: Roboto, sans-serif;
+  font-size: 1.5em;
 
 }
 
 nav a:active,
 nav a:hover {
-    background-color: #AFE29F;
-    border-bottom: 5px solid #C2462E;
+  background-color: #AFE29F;
+  border-bottom: 5px solid #C2462E;
 }
 
 .menu a {
-    display: block;
-    padding: 30px;
-    color: #2525C2;
+  display: block;
+  padding: 30px;
+  color: #2525C2;
 }
 
 .menu a:hover {
-    background-color: #AFE29F;
+  background-color: #AFE29F;
 }
 
 .nav {
-    max-height: 0;
-    transition: max-height .5s ease-out;
+  max-height: 0;
+  transition: max-height .5s ease-out;
 }
 
 /* Menu Icon */
 .hamb {
-    cursor: pointer;
-    float: right;
-    padding: 2rem;
+  cursor: pointer;
+  float: right;
+  padding: 2rem;
 }
 
 /* Style label tag */
 .hamb-line {
-    background: #2525C2;
-    display: block;
-    height: 0.1rem;
-    position: relative;
-    width: 2rem;
+  background: #2525C2;
+  display: block;
+  height: 0.1rem;
+  position: relative;
+  width: 2rem;
 
 }
 
 .hamb-line::before,
 .hamb-line::after {
-    background: #2525C2;
-    content: '';
-    display: block;
-    height: 100%;
-    position: absolute;
-    transition: all .2s ease-out;
-    width: 100%;
+  background: #2525C2;
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  transition: all .2s ease-out;
+  width: 100%;
 }
 
 .hamb-line::before {
-    top: 5px;
+  top: 5px;
 }
 
 .hamb-line::after {
-    top: -5px;
+  top: -5px;
 }
 
 .side-menu {
-    display: none;
+  display: none;
 }
 
 /* Toggle menu icon */
 .side-menu:checked~nav {
-    max-height: 100%;
+  max-height: 100%;
 }
 
 .side-menu:checked~.hamb .hamb-line {
-    background: transparent;
+  background: transparent;
 }
 
 .side-menu:checked~.hamb .hamb-line::before {
-    transform: rotate(-45deg);
-    top: 0;
+  transform: rotate(-45deg);
+  top: 0;
 }
 
 .side-menu:checked~.hamb .hamb-line::after {
-    transform: rotate(45deg);
-    top: 0;
+  transform: rotate(45deg);
+  top: 0;
 }
 
 .main {
-    margin-top: 5em;
-    padding-top: 1.25em;
+  margin-top: 5em;
+  padding-top: 1.25em;
 }
 
 hr.section_break {
-    border-top: 8px solid #707070;
-    margin: 0;
+  border-top: 8px solid #707070;
+  margin: 0;
 }
 
 #header_image {
-    width: 100%;
+  width: 100%;
 }
 
 #map_graphic {
-    width: 100%;
+  width: 100%;
 }
 
 #mystery_box {
-    width: 100%;
+  width: 100%;
 }
 
 .body_text {
-    font-family: Heebo, sans-serif;
-    font-weight: bold;
-    font-size: 1.5em;
+  font-family: Heebo, sans-serif;
+  font-weight: bold;
+  font-size: 1.5em;
 }
 
 h1,
 h2 {
-    font-family: "EB Garamond", serif;
+  font-family: "EB Garamond", serif;
 }
 
 .page_heading {
-    padding-left: 15%;
-    padding-top: 20px;
+  padding-left: 15%;
+  padding-top: 20px;
 }
 
 header h1 {
-    color: #C2462E;
-    font-size: 3em;
+  color: #C2462E;
+  font-size: 3em;
 }
 
 header h2 {
-    color: #297511;
-    font-size: 2.5em;
+  color: #297511;
+  font-size: 2.5em;
 }
 
 .section_header {
-    font-size: 2em;
-    margin: 0;
+  font-size: 2em;
+  margin: 0;
 }
 
 #possibilities_header {
-    text-align: left;
+  text-align: left;
 }
 
 #demos_header {
-    text-align: center;
+  text-align: center;
 }
 
 
 footer {
-    background-color: rgb(122, 107, 84, 0.38);
-    margin: -2rem 0;
-    font-family: "EB Garamond", serif;
-    font-size: 1.5em;
-    color: black;
-    text-align: center;
-    height: 6em;
-    font-weight: 600;
-    padding: 5rem 0rem;
+  background-color: rgb(122, 107, 84, 0.38);
+  margin: -2rem 0;
+  font-family: "EB Garamond", serif;
+  font-size: 1.5em;
+  color: black;
+  text-align: center;
+  height: 6em;
+  font-weight: 600;
+  padding: 5rem 0rem;
 }
 
 /* Extra small devices (portrait phones less than 576px)
