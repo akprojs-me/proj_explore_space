@@ -28,13 +28,13 @@ nav {
 nav ul {
   list-style-type: none;
   margin: 0;
-  padding: 0 0 0 1em;
+  padding: 0;
 }
 
 nav a {
   text-decoration: none;
   color: #2525C2;
-  padding: 1em 2em;
+  padding: 1em 0;
 }
 
 #nav-bar-menu-logo {

@@ -8,6 +8,8 @@ a {
 
 ul {
   list-style: none;
+  padding: 0.5em 0 0 1em;
+  margin: 0;
 }
 
 .top_nav {
@@ -29,24 +31,21 @@ ul {
   background-color: #caddc4;
   overflow: hidden;
   font-family: Roboto, sans-serif;
-  font-size: 1.5em;
+  font-size: 1em;
 
+}
+
+.menu a {
+  display: block;
+  padding: 0;
+  color: #2525C2;
+  border-bottom: 3px solid #caddc4;
 }
 
 nav a:active,
 nav a:hover {
   background-color: #AFE29F;
-  border-bottom: 5px solid #C2462E;
-}
-
-.menu a {
-  display: block;
-  padding: 30px;
-  color: #2525C2;
-}
-
-.menu a:hover {
-  background-color: #AFE29F;
+  border-bottom: 3px solid #C2462E;
 }
 
 .nav {
@@ -58,7 +57,7 @@ nav a:hover {
 .hamb {
   cursor: pointer;
   float: right;
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 /* Style label tag */
@@ -197,4 +196,40 @@ footer {
 @media screen and (min-width: 768px) {}
 
 /* Large devices (desktops, 992px and up) */
-@media screen and (min-width: 992px) {}
+@media screen and (min-width: 992px) {
+  .nav {
+    max-height: none;
+    top: 0;
+    position: relative;
+    float: right;
+    width: fit-content;
+    background-color: transparent;
+    font-size: 1.5em;
+  }
+
+
+  nav li {
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+    padding: 0 2em;
+  }
+
+  .hamb {
+    display: none;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #2525C2;
+    padding: 1em;
+  }
+
+  nav a:active,
+  nav a:hover {
+    background-color: #AFE29F;
+    border-bottom: 5px solid #C2462E;
+  }
+
+
+}
