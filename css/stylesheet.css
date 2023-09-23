@@ -168,6 +168,7 @@ header {
   flex: 30%;
   max-width: 30%;
   height: auto;
+  margin: auto;
 }
 
 #page_title {
