@@ -43,12 +43,21 @@
 		<!-- Menu -->
 		<nav class="nav">
 			<ul class="menu">
-				<li><a href="#page_title">Home</a></li>
-				<li><a href="#info">Info</a></li>
-				<li><a href="#demos">Demos</a></li>
-				<li><a href="#contact">Contact</a></li>
+				<li><a href="#page_title" onclick=uncheckSideMenu()>Home</a></li>
+				<li><a href="#info" onclick=uncheckSideMenu()>Info</a></li>
+				<li><a href="#demos" onclick=uncheckSideMenu()>Demos</a></li>
+				<li><a href="#contact" onclick=uncheckSideMenu()>Contact</a></li>
 			</ul>
 		</nav>
+		<script>
+			function uncheckSideMenu() {
+				// Get the checkbox
+				var checkBox = document.getElementById("side-menu");
+				if (checkBox.checked) {
+					checkBox.checked = false;
+				}
+			}
+		</script>
 	</div>
 	<div class="main">
 		<header>
