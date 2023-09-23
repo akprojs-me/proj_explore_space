@@ -230,6 +230,7 @@ header {
   grid-area: 2 / 1 / span 1 / span 2;
   margin: auto;
   padding: 3rem;
+  max-width: 100%;
 }
 
 footer {
