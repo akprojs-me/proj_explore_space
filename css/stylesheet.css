@@ -247,11 +247,11 @@ footer {
 /* Extra small devices (portrait phones less than 576px)
   This is the default with mobile first design */
 
-/* Small devices (landscape phones, 576px and up) */
-@media screen and (min-width: 576px) {}
+/* Small devices (landscape phones, 576px and up)
+@media screen and (min-width: 576px) {}  */
 
-/* Medium devices (tablets, 768px and up) */
-@media screen and (min-width: 768px) {}
+/* Medium devices (tablets, 768px and up) 
+@media screen and (min-width: 768px) {} */
 
 /* Large devices (desktops, 992px and up) */
 @media screen and (min-width: 992px) {
