@@ -147,7 +147,7 @@ header h2 {
 }
 
 .section_header {
-  font-size: clamp(1.5rem, 5vw + 0rem, 2.6rem);
+  font-size: clamp(1.5rem, 4vw + 0rem, 2.6rem);
   margin: 0;
 }
 
@@ -186,14 +186,15 @@ header {
   grid-row: 1;
   text-align: left;
   padding-top: 2rem;
+  margin: auto;
 }
 
 #info_text {
   grid-column: 1 / span 2;
   grid-row: 2;
-  color: rgb(50, 50, 50)
+  color: rgb(50, 50, 50);
+  margin: auto;
 }
-
 
 #map_graphic {
   grid-column: 2;
@@ -201,18 +202,46 @@ header {
   max-width: 100%;
   height: auto;
   padding: 0.5rem;
+  margin: auto;
+}
+
+#demos {
+  display: grid;
+  grid: auto auto / 1fr 3fr;
+  justify-content: space-around;
+  align-content: center;
+}
+
+#mystery_box {
+  grid-area: 1 / 1 / span 1 / span 1;
+  max-width: 100%;
+  height: auto;
+  padding: 0.5rem;
+  margin: auto;
+}
+
+#demos_header {
+  grid-area: 1 / 2 / span 1 / span 1;
+  padding-top: 2rem;
+  margin: auto;
+}
+
+#demo_text {
+  grid-area: 2 / 1 / span 1 / span 2;
+  margin: auto;
+  padding: 3rem;
 }
 
 footer {
   background-color: rgb(122, 107, 84, 0.38);
-  margin: -2rem 0;
   font-family: "EB Garamond", serif;
-  font-size: clamp(1.2em, 2vw + 0.5em, 1.5em);
+  font-size: clamp(0.75em, 3vw + 0.1em, 1.5em);
   color: black;
   text-align: center;
   height: 6em;
   font-weight: 600;
-  padding: 5rem 0rem;
+  padding: 2rem 1rem;
+  margin: auto;
 }
 
 /* Extra small devices (portrait phones less than 576px)
@@ -276,5 +305,20 @@ footer {
     grid-column: 1;
     grid-row: 2;
   }
+
+  #mystery_box {
+    grid-area: 1 / 1 / span 2 / span 1;
+    max-width: 100%;
+    height: auto;
+  }
+
+  #demos_header {
+    grid-area: 1 / 2 / span 1 / span 1;
+  }
+
+  #demo_text {
+    grid-area: 2 / 2 / span 1 / span 1;
+  }
+
 
 }
