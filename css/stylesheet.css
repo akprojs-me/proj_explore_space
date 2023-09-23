@@ -113,8 +113,8 @@ nav a:hover {
 }
 
 .main {
-  margin-top: 5em;
-  padding-top: 1.25em;
+  margin-top: 5vm;
+  padding-top: 5vm;
 }
 
 hr.section_break {
@@ -123,15 +123,15 @@ hr.section_break {
 }
 
 #header_image {
-  width: 100%;
+  max-width: 190px;
 }
 
 #map_graphic {
-  width: 100%;
+  max-width: 450px;
 }
 
 #mystery_box {
-  width: 100%;
+  max-width: 320px;
 }
 
 .body_text {
@@ -152,12 +152,12 @@ h2 {
 
 header h1 {
   color: #C2462E;
-  font-size: 3em;
+  font-size: 5vw;
 }
 
 header h2 {
   color: #297511;
-  font-size: 2.5em;
+  font-size: 3vw;
 }
 
 .section_header {
@@ -171,6 +171,25 @@ header h2 {
 
 #demos_header {
   text-align: center;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+#header_image {
+  flex: 33%;
+  max-width: 100%;
+  height: auto;
+  padding: 5vw;
+}
+
+#page_title {
+  flex: 66%;
 }
 
 
