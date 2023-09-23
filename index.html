@@ -1,195 +1,113 @@
 <!DOCTYPE html>
 <html lang="en-US">
+
+
 <head>
-<title>Progressive Development</title>
-<meta charset="UTF-8">
-<meta name="keywords" content="self-improvement, games, systems thinking">
-<meta name="description" content="Practical Info and Interactive Simulations on Exploring Possibilities and Shifting Mindsets Based on Systems Thinking and Game Theory"> 
-<!--Next line refreshes the document every 30 seconds, not sure if this is actually necessary-->
-<meta http-equiv="refresh" content="30">
-<!--Sets the width of the webpage to follow the screen width of the device-->
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Progressive Development</title>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="self-improvement, games, systems thinking">
+	<meta name="description"
+		content="Practical Info and Interactive Simulations on Exploring Possibilities and Shifting Mindsets Based on Systems Thinking and Game Theory">
+	<!--Next line refreshes the document every 30 seconds, not sure if this is actually necessary-->
+	<meta http-equiv="refresh" content="30">
+	<!--Sets the width of the webpage to follow the screen width of the device-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Progressive Development</title>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="self-improvement, games, systems thinking">
+	<meta name="description"
+		content="Practical Info and Interactive Simulations on Exploring Possibilities and Shifting Mindsets Based on Systems Thinking and Game Theory">
+	<!--Next line refreshes the document every 30 seconds, not sure if this is actually necessary-->
+	<meta http-equiv="refresh" content="30">
+	<!--Sets the width of the webpage to follow the screen width of the device-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!--Favicon Insertion Code-->
-<link rel="apple-touch-icon" sizes="180x180" href="favicon_package_v0.16/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon_package_v0.16/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon_package_v0.16/favicon-16x16.png">
-<link rel="manifest" href="favicon_package_v0.16/site.webmanifest">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=EB Garmond|Heebo|Inclusive+Sans|Roboto">
-<style>
-	* {
-  		box-sizing: border-box;
-	}
-
-	nav {
-		top: 0;
-		font-family: Roboto, sans-serif;
-		font-size: 40px;
-		display: flex;
-		background-color: #caddc4;
-		width: 100%;
-		position: fixed;
-	}
-
-	nav ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0 0 0 50px;
-	}
-
-	nav a {
-		text-decoration: none;
-		color: #2525C2;
-	}
-
-	#nav-bar-menu-logo {
-		margin-left: 20px;
-	}
-
-	nav li {
-		display: inline-block;
-		text-align: center;
-		margin: 0;
-		padding: 20px 10px 0 10px;
-	}
-
-	nav a:active, nav a:hover  {
-		background-color: #AFE29F;
-	}
-
-	.main {
-		margin-top: 80px;
-		padding-top: 20px;
-	}
-
-	hr.section_break {
-		border-top: 8px solid #707070;
-		margin: 0;
-	}
-
-	#header_image {
-		float: left;
-		padding-top: 40px;
-		padding-bottom: 20px;
-	}
-
-	.clearfix {
-		overflow: auto;
-	}
-
-	.body_text {
-		font-family: Heebo, sans-serif;
-		font-weight: bold;
-		font-size: 20px;
-	}
-	
-	h1, h2 {
-		font-family: "EB Garamond", serif;
-	}
-	
-	.page_heading {
-		padding-left: 15%;
-		padding-top: 20px;
-	}
-
-	header h1 {
-		color: #C2462E;
-		font-size: 48px;
-	}
-
-	header h2 {
-		color: #297511;
-		font-size: 32px;
-	}
-
-	#map_graphic {
-		float: right;
-		width: 20%;
-		margin: 40px 0;
-	}
-
-	#mystery_box {
-		float: left;
-		margin: 5px 120px 0px 40px;
-	}
-
-	.section_header {
-		font-size: 32px;
-	}
-
-	#possibilities_header {
-		text-align: left;
-	}
-
-	#demos_header {
-		text-align: center;
-	}
-
-	#demo_text {
-		margin: 5% 20% 0% 25%;
-	}
-
-	footer {
-		background-color: rgb(122, 107, 84, 0.38);
-		margin: 0;
-		font-family: "EB Garamond", serif;
-		font-size: 18px;
-		color: black;
-		text-align: center;
-		height: 50px;
-		font-weight: 600;
-		padding-top: 10px;
-	}
-</style>
-
+	<!--Favicon Insertion Code-->
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon_package_v0.16/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon_package_v0.16/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon_package_v0.16/favicon-16x16.png">
+	<link rel="manifest" href="favicon_package_v0.16/site.webmanifest">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="css/stylesheet.css">
 </head>
+
+
 <body>
-<nav>
-	<img src="images/nav-bar-menu-logo.svg" alt="nav bar menu logo", width="166", height="83", id="nav-bar-menu-logo">
-	<ul>
-	<li><a href="#page_title">Home</a></li>
-	<li><a href="#demos">Demos</a></li> 
-	<li><a href="#contact">Contact</a></li>	
-	</ul>
-</nav>
+	<div class="top_nav">
+		<a href="#" , class="logo"><img src="images/blue-a-with-diamond-logo.svg" alt="nav bar menu logo" , width="56" ,
+				height="57" , id="nav-bar-menu-logo"></a>
+		<!-- Hamburger icon -->
+		<input class="side-menu" type="checkbox" id="side-menu" />
+		<label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
+		<!-- Menu -->
+		<nav class="nav">
+			<ul class="menu">
+				<li><a href="#page_title" onclick=uncheckSideMenu()>Home</a></li>
+				<li><a href="#info" onclick=uncheckSideMenu()>Info</a></li>
+				<li><a href="#demos" onclick=uncheckSideMenu()>Demos</a></li>
+				<li><a href="#contact" onclick=uncheckSideMenu()>Contact</a></li>
+			</ul>
+		</nav>
+		<script>
+			function uncheckSideMenu() {
+				// Get the checkbox
+				var checkBox = document.getElementById("side-menu");
+				if (checkBox.checked) {
+					checkBox.checked = false;
+				}
+			}
+		</script>
+	</div>
+	<div class="main">
+		<header>
+			<img src="images/custom-flask-plant-graphic.svg" , alt="custom flask plant experimentation graphic" ,
+				width="187.06" , height="207.97" , id="header_image">
+			<div id="page_title">
+				<h1 class="page_heading">An Iterative Space for Experimentation</h1>
+				<h2 class="page_heading">A Playground for Exploring Fundamental Possibilities Systematically</h2>
+			</div>
 
-<div class="main">
-<header>
-<div class="clearfix">
-<img src="images/custom-flask-plant-graphic.svg", alt="custom flask plant experimentation graphic", width="189.44", height="236.17", id="header_image">
-<h1 class="page_heading">An Iterative Space for Experimentation</h1>
-<h2 class="page_heading">A Playground for Exploring Fundamental Possibilities Systematically</h2>
-</div>
-</header>
+		</header>
 
-<hr class="section_break">
+		<hr class="section_break">
 
-<div class="clearfix">
-<img src="images/map-possibilities-custom-graphic.svg", alt="map possibilities custom graphic", id="map_graphic">
-<h2 id="possibilites_header", class="section_header">What is the scope of possibilities?</h2>
-<div class="body_text">
-<p>We live in a limited world with limitless possibilities.</p>
-<p>The future is uncertain, but the present moment is full of occurrences 
-	which impact the future.</p>
-<p>We cannot help but act and influence the environment around us.</p>
-<p>Our world is not inseparable from ourselves.</p>
-<p>Applying systematic thinking to simplified models of our world may help us see the interplay between actions we can control and their influence on the world that surrounds us.</p>
-</div>
-</div>
-<hr class="section_break">
+		<div id="info">
+			<h2 id="possibilities_header" class="section_header">What is the scope of possibilities?</h2>
+			<img src="images/map-possibilities-custom-graphic.svg" , alt="map possibilities custom graphic" ,
+				width="645" , height="455" , id="map_graphic">
 
-<div id="demos", class="clearfix">
-<h2 id="demos_header", class="section_header">Explorations Within a Confined System</h2>
-<img src="images/mysterious-box-question-background-graphic.svg", alt="mysterious box question graphic", width="246", height="256", id="mystery_box">
-<p class="body_text", id="demo_text">The interactive demonstrations, games, and case studies in this section expand upon the topic of exploring different possible outcomes within a constrained systemic structure.</p>
-</div>
-<hr class="section_break">
-<footer id="contact">
-	If you have any questions or suggestions for this page, feel to contact akprojs.me@gmail.com
-</footer>
-</div>
+			<div class="body_text" id="info_text">
+				<p>We live in a limited world with limitless possibilities.</p>
+				<p>The future is uncertain, but the present moment is full of occurrences
+					which impact the future.</p>
+				<p>We cannot help but act and influence the environment around us.</p>
+				<p>Our world is not inseparable from ourselves.</p>
+				<p>Applying systematic thinking to simplified models of our world may help us see the interplay
+					between actions we can control and their influence on the world that surrounds us.</p>
+			</div>
+		</div>
+
+		<div>
+			<hr class="section_break">
+		</div>
+
+		<div id="demos">
+			<img src="images/mysterious-box-question-background-graphic.svg" , alt="mysterious box question graphic" ,
+				width="320" , height="325" , id="mystery_box">
+			<h2 id="demos_header" , class="section_header">Explorations Within a Confined System</h2>
+			<p class="body_text" , id="demo_text">The interactive demonstrations, games, and case studies in this
+				section expand upon the topic of exploring different possible outcomes within a constrained systemic
+				structure.</p>
+		</div>
+		<hr class="section_break">
+
+
+		<footer id="contact">
+			If you have any questions or suggestions for this page, feel to contact akprojs.me@gmail.com
+		</footer>
+
+	</div>
 </body>
+
 </html>
