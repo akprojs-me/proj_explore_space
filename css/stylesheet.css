@@ -17,6 +17,7 @@ ul {
   position: fixed;
   top: 0;
   width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #nav-bar-menu-logo {
@@ -31,7 +32,21 @@ ul {
   overflow: hidden;
   font-family: Roboto, sans-serif;
   font-size: clamp(1rem, 5vw + 0.5rem, 1.5rem);
+  transition: max-height .5s ease-out;
+}
 
+.nav.homepage {
+  max-height: 0;
+}
+
+.nav.pdemo {
+  max-height: none;
+  top: 0;
+  position: relative;
+  float: right;
+  width: fit-content;
+  background-color: transparent;
+  font-size: 1.5em;
 }
 
 .menu a {
@@ -41,15 +56,14 @@ ul {
   border-bottom: 3px solid #caddc4;
 }
 
-nav a:active,
-nav a:hover {
-  background-color: #AFE29F;
-  border-bottom: 3px solid #C2462E;
+.menu.pdemo a {
+  padding-right: 20px;
 }
 
-.nav {
-  max-height: 0;
-  transition: max-height .5s ease-out;
+nav.homepage a:active,
+nav.homepage a:hover {
+  background-color: #AFE29F;
+  border-bottom: 3px solid #C2462E;
 }
 
 /* Menu Icon */
@@ -249,24 +263,28 @@ footer {
 
 
 .back-arrow {
+  display: inline-block;
   position: relative;
-  width: 30px;
-  margin: 15px 0;
-  height: 0;
-  border-bottom: 10px solid #2525C2;
-  padding: 0;
+  width: 2rem;
+  margin: 1rem 0;
+  height: 0.5rem;
+  background-color: #2525C2;
+  padding-right: 1rem;
 }
 
 .back-arrow::before {
+  display: inline-block;
   content: '';
   width: 0;
   height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right: 30px solid#2525C2;
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-right: 1.5rem solid#2525C2;
   position: absolute;
-  left: -25px;
-  top: -5px;
+  left: -1rem;
+  top: -0.8rem;
+  margin: 0;
+  padding: 0;
 }
 
 /* Extra small devices (portrait phones less than 576px)
@@ -280,7 +298,7 @@ footer {
 
 /* Large devices (desktops, 992px and up) */
 @media screen and (min-width: 992px) {
-  .nav {
+  .nav.homepage {
     max-height: none;
     top: 0;
     position: relative;
@@ -308,8 +326,8 @@ footer {
     padding: 1em;
   }
 
-  nav a:active,
-  nav a:hover {
+  nav.homepage a:active,
+  nav.homepage a:hover {
     background-color: #AFE29F;
     border-bottom: 5px solid #C2462E;
   }
