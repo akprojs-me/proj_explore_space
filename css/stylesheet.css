@@ -213,6 +213,7 @@ header {
   align-content: center;
 }
 
+
 #mystery_box {
   grid-area: 1 / 1 / span 1 / span 1;
   max-width: 100%;
@@ -244,6 +245,28 @@ footer {
   font-weight: 600;
   padding: 2rem 1rem;
   margin: auto;
+}
+
+
+.back-arrow {
+  position: relative;
+  width: 30px;
+  margin: 15px 0;
+  height: 0;
+  border-bottom: 10px solid #2525C2;
+  padding: 0;
+}
+
+.back-arrow::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 30px solid#2525C2;
+  position: absolute;
+  left: -25px;
+  top: -5px;
 }
 
 /* Extra small devices (portrait phones less than 576px)
