@@ -126,7 +126,7 @@ nav.homepage a:hover {
 }
 
 .main {
-  margin-top: 2rem;
+  margin-top: 4rem;
 }
 
 hr.section_break {
@@ -158,6 +158,20 @@ header h1 {
 header h2 {
   color: #297511;
   font-size: clamp(1.3rem, 4vw + 0rem, 3rem);
+}
+
+#pendulum_heading {
+  color: #C2462E;
+  font-size: clamp(1.3rem, 4vw + 0rem, 2.6rem);
+  text-align: center;
+}
+
+#pendulum_description {
+  font-family: "EB Garamond", serif;
+  font-size: clamp(1.0rem, 3vw + 0rem, 2rem);
+  font-weight: 600;
+  width: 60%;
+  margin: auto;
 }
 
 .section_header {
