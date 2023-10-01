@@ -301,6 +301,27 @@ footer {
   padding: 0;
 }
 
+.pendulum_controls {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: center;
+}
+
+.pendulum_controls label {
+  display: block;
+  grid-row: 1 / span 1;
+}
+
+.pendulum_controls input {
+  grid-row: 2 / span 1;
+}
+
+.pendulum_input {
+  display: block;
+}
+
 /* Extra small devices (portrait phones less than 576px)
   This is the default with mobile first design */
 
