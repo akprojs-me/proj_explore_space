@@ -19,32 +19,73 @@ function drawCanvas() {
     let buttonHeight = buttonsHeight - 2 * padButtons;
 
     ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
     ctx.strokeRect(startingX, startingY, buttonsWidth, buttonsHeight);
     console.log("startingX: ", startingX);
     console.log("startingY: ", startingY);
     console.log("canvas width: ", canvas.width)
     console.log("canvas height: ", canvas.height)
 
-    ctx.strokeStyle = "#297511";
-    ctx.beginPath();
-    ctx.moveTo(startingX + padButtons, startingY + padButtons);
-    ctx.lineTo(startingX + padButtons, startingY + padButtons + buttonHeight);
-    ctx.lineTo(startingX + padButtons + buttonHeight / 2.0, startingY + padButtons + buttonHeight / 2.0);
+    let playButton = new Path2D();
+    playButton.strokeStyle = "#297511";
+    playButton.moveTo(startingX + padButtons, startingY + padButtons);
+    playButton.lineTo(startingX + padButtons, startingY + padButtons + buttonHeight);
+    playButton.lineTo(startingX + padButtons + buttonHeight / 2.0, startingY + padButtons + buttonHeight / 2.0);
     console.log("triangle point 1: ", startingX + padButtons, startingY + padButtons);
     console.log("triangle point 2: ", startingX + padButtons, startingY + padButtons + buttonHeight);
     console.log("triangle point 3: ", startingX + padButtons + buttonHeight / 2.0, startingY + padButtons + buttonHeight / 2.0);
-    ctx.closePath();
-    ctx.stroke();
+    playButton.closePath();
+    ctx.stroke(playButton);
+
     ctx.fillStyle = "#92D050";
     if (simulationActive) {
         ctx.fillStyle = "#767676";
     }
-    ctx.fill();
+    ctx.fill(playButton);
+
+    let stopButton = new Path2D();
     ctx.fillStyle = "#8C8303";
     if (!simulationActive) {
         ctx.fillStyle = "#767676";
     }
-    ctx.fillRect(startingX + buttonsWidth / 2 + padButtons, startingY + padButtons, buttonHeight, buttonHeight);
+    stopButton.rect(startingX + buttonsWidth / 2 + padButtons, startingY + padButtons, buttonHeight, buttonHeight);
+    ctx.fill(stopButton);
+
+    // Add listener for play button click
+    canvas.addEventListener("click", (event) => {
+        // Check whether point inside play button
+        const rect = canvas.getBoundingClientRect();
+        const x = (event.clientX - rect.left) * canvas.width / rect.width;
+        const y = (event.clientY - rect.top) * canvas.height / rect.height;
+        const isPointInPlay = ctx.isPointInPath(playButton, x, y);
+        console.log("isPointInPlay", isPointInPlay, "x", x, "y", y);
+        if (isPointInPlay && !simulationActive) {
+            simulationActive = true;
+            ctx.fillStyle = "#767676";
+            ctx.fill(playButton);
+            ctx.fillStyle = "#8C8303";
+            ctx.fill(stopButton);
+
+        }
+    })
+
+    // Add listener for stop button click
+    canvas.addEventListener("click", (event) => {
+        // Check whether point inside stop button
+        const rect = canvas.getBoundingClientRect();
+        const x = (event.clientX - rect.left) * canvas.width / rect.width;
+        const y = (event.clientY - rect.top) * canvas.height / rect.height;
+        const isPointInStop = ctx.isPointInPath(stopButton, x, y);
+        console.log("isPointInStop", isPointInStop, "x", x, "y", y);
+        if (isPointInStop && simulationActive) {
+            simulationActive = false;
+            ctx.fillStyle = "#767676";
+            ctx.fill(stopButton);
+            ctx.fillStyle = "#92D050";
+            ctx.fill(playButton);
+        }
+    })
+
     drawPendulum();
 }
 
@@ -118,6 +159,7 @@ sliders.forEach((slider, index) => {
     slider.addEventListener('input', function () {
         selectedValues[index].textContent = slider.value;
         drawCanvas();
+        simulationActive = false;
     });
 });
 
