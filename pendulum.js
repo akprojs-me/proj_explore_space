@@ -8,3 +8,14 @@ sliders.forEach((slider, index) => {
         selectedValues[index].textContent = slider.value;
     });
 });
+
+// JavaScript code for responsive canvas
+const canvas = document.getElementById('pendulum-canvas');
+const ctx = canvas.getContext('2d');
+
+// Function to set canvas size based on parent container size
+function setCanvasSize() {
+    const container = document.getElementById('canvas-container');
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+}
