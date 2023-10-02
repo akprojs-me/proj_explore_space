@@ -3,9 +3,11 @@ const canvas = document.getElementById('pendulum-canvas');
 const ctx = canvas.getContext('2d');
 
 var simulationActive = false;
+var pendulumAngle = document.getElementById("angle_input").value;
+var time = 0; // seconds
 
 // Draw out the state of the pendulum
-function drawCanvas() {
+function updatePendulumCanvas() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -51,6 +53,12 @@ function drawCanvas() {
     stopButton.rect(startingX + buttonsWidth / 2 + padButtons, startingY + padButtons, buttonHeight, buttonHeight);
     ctx.fill(stopButton);
 
+    console.log("simulationActive at end of function", simulationActive)
+    drawPendulum();
+    if (simulationActive) {
+        simulatePendulum();
+    }
+
     // Add listener for play button click
     canvas.addEventListener("click", (event) => {
         // Check whether point inside play button
@@ -58,17 +66,19 @@ function drawCanvas() {
         const x = (event.clientX - rect.left) * canvas.width / rect.width;
         const y = (event.clientY - rect.top) * canvas.height / rect.height;
         const isPointInPlay = ctx.isPointInPath(playButton, x, y);
-        console.log("isPointInPlay", isPointInPlay, "x", x, "y", y);
         if (isPointInPlay && !simulationActive) {
+            console.log("setting simulation active to true")
             simulationActive = true;
+            console.log("simulationActive", simulationActive);
             ctx.fillStyle = "#767676";
             ctx.fill(playButton);
             ctx.fillStyle = "#8C8303";
             ctx.fill(stopButton);
-
+            simulatePendulum();
         }
     })
 
+    console.log("outside first event listener");
     // Add listener for stop button click
     canvas.addEventListener("click", (event) => {
         // Check whether point inside stop button
@@ -76,7 +86,6 @@ function drawCanvas() {
         const x = (event.clientX - rect.left) * canvas.width / rect.width;
         const y = (event.clientY - rect.top) * canvas.height / rect.height;
         const isPointInStop = ctx.isPointInPath(stopButton, x, y);
-        console.log("isPointInStop", isPointInStop, "x", x, "y", y);
         if (isPointInStop && simulationActive) {
             simulationActive = false;
             ctx.fillStyle = "#767676";
@@ -85,17 +94,8 @@ function drawCanvas() {
             ctx.fill(playButton);
         }
     })
-    if (!simulationActive) {
-        drawPendulum();
-    }
-    else {
-        simulatePendulum()
-    }
 }
 
-function simulatePendulum() {
-
-}
 
 function drawPendulum() {
     ctx.fillStyle = "#8C8303";
@@ -122,9 +122,8 @@ function drawPendulum() {
 
     let specifiedLength = document.getElementById("length_input").value;
     console.log("specifiedLength", specifiedLength);
-    let specifiedAngle = document.getElementById("angle_input").value;
-    console.log("specifiedAngle", specifiedAngle);
-    let specifiedAngleRads = specifiedAngle * (Math.PI / 180)
+
+    let specifiedAngleRads = pendulumAngle * (Math.PI / 180)
     console.log("specifiedAngleRads", specifiedAngleRads);
 
     // set pixels per 1 m specified for length
@@ -158,6 +157,20 @@ function drawPendulum() {
     console.log("fill of circle");
 }
 
+function simulatePendulum() {
+    let timestep = 0.005; // seconds, keeping this constant
+    time = time + timestep;
+    // Using small angle approximation (only really valid for small angles) - acts as a simple harmonic oscillator
+    let gravValue = document.getElementById("gravity_input").value;
+    let length = document.getElementById("length_input").value;
+    let specifiedAngle = document.getElementById("angle_input").value;
+    let omega = Math.sqrt(gravValue / length);
+    pendulumAngle = specifiedAngle * Math.cos(omega * time);
+    console.log("in simulatePendulum pendulumAngle", pendulumAngle);
+    requestAnimationFrame(updatePendulumCanvas)
+}
+
+
 // JavaScript code to display the selected value for each control
 const sliders = document.querySelectorAll('input[type="range"]');
 const selectedValues = document.querySelectorAll('.selectedValue');
@@ -166,10 +179,11 @@ sliders.forEach((slider, index) => {
     selectedValues[index].textContent = slider.value;
     slider.addEventListener('input', function () {
         selectedValues[index].textContent = slider.value;
-        drawCanvas();
+        pendulumAngle = document.getElementById("angle_input").value;
+        updatePendulumCanvas();
         simulationActive = false;
     });
 });
 
-drawCanvas()
+updatePendulumCanvas()
 
