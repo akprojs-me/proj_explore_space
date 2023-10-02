@@ -85,8 +85,16 @@ function drawCanvas() {
             ctx.fill(playButton);
         }
     })
+    if (!simulationActive) {
+        drawPendulum();
+    }
+    else {
+        simulatePendulum()
+    }
+}
 
-    drawPendulum();
+function simulatePendulum() {
+
 }
 
 function drawPendulum() {

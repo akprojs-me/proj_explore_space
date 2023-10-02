@@ -63,10 +63,15 @@
                 <input type="range" id="friction_input" name="friction" min="0" max="1" step="0.05" value="0"
                     title="fraction_input">
                 <div class="selectedValue"></div>
+                <label for="solverSelect">Solver: </label>
+                <select id="solverSelect" name="solver">
+                    <option value="small_angle_approx">Small Angle Approximation</option>
+                    <option value="euler">Euler's Method</option>
+                    <option value="runge_kutta" selected>Runge-Kutta</option>
+                </select>
             </div>
             <div id="canvas-container">
                 <canvas id="pendulum-canvas" width="1000" height="800"></canvas>
-
                 <canvas id="plotting-canvas" width="1000" height="800"></canvas>
             </div>
         </div>
