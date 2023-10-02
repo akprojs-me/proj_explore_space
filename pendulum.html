@@ -20,7 +20,7 @@
         <!-- Menu -->
         <nav class="nav pdemo">
             <ul class="menu pdemo">
-                <li><a href="./index.html" class="back-arrow">
+                <li><a href="./index.html" class="back-arrow" title="back-arrow">
                     </a></li>
             </ul>
         </nav>
@@ -44,25 +44,30 @@
             <div class="pendulum_controls">
                 <h2>Pendulum Controls</h2>
                 <label for="length">Length (m)</label>
-                <input type="range" id="length_input" name="length" min="0.1" max="1" step="0.1" value="1">
+                <input type="range" id="length_input" name="length" min="0.1" max="1" step="0.1" value="1"
+                    title="length_input">
                 <div class="selectedValue"></div>
                 <label for="mass">Mass (kg)</label>
-                <input type="range" id="mass_input" name="mass" min="0.1" max="1.5" step="0.1" value="1">
+                <input type="range" id="mass_input" name="mass" min="0.1" max="1.5" step="0.1" value="1"
+                    title="mass_input">
                 <div class="selectedValue"></div>
                 <label for="angle">Initial Angle of the Pendulum (°)</label>
-                <input type="range" id="angle_input" name="angle" min="-120" max="120" step="1" value="0">
+                <input type="range" id="angle_input" name="angle" min="-90" max="90" step="1" value="0"
+                    title="angle_input">
                 <div class="selectedValue"></div>
                 <label for="gravity">Gravitational Acceleration (m/s<sup>2</sup>)</label>
-                <input type="range" id="gravity_input" name="gravity" min="0" max="25" step="0.01" value="9.81">
+                <input type="range" id="gravity_input" name="gravity" min="0" max="25" step="0.01" value="9.81"
+                    title="gravity_input">
                 <div class="selectedValue"></div>
                 <label for="Friction">Friction Damping Factor</label>
-                <input type="range" id="friction_input" name="friction" min="0" max="1" step="0.05" value="0">
+                <input type="range" id="friction_input" name="friction" min="0" max="1" step="0.05" value="0"
+                    title="fraction_input">
                 <div class="selectedValue"></div>
             </div>
             <div id="canvas-container">
-                <canvas id="pendulum-canvas" width="1000" height="1000"></canvas>
+                <canvas id="pendulum-canvas" width="1000" height="800"></canvas>
 
-                <canvas id="plotting-canvas" width="1000" height="1000"></canvas>
+                <canvas id="plotting-canvas" width="1000" height="800"></canvas>
             </div>
         </div>
         <script src="pendulum.js"></script>
