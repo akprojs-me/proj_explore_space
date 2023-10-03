@@ -7,30 +7,23 @@ var pendulumAngle = document.getElementById("angle_input").value;
 var angularVelocity = 0; // intial value for angular velocity
 var time = 0; // seconds
 const timestep = 0.005; // seconds, keeping this constant
+var scatterPlotData = {};
+let simNum = 0;
 
-var timeData = [];
-var angleData = [];
-var angularVelocityData = [];
-var prevData = {};
-
+const defaultColors = ["#b30000", "#7c1158", "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"];
+const nColors = defaultColors.length;
+let plotDataSets = [{ label: "Sim 1", data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true }];
 
 // Get the canvas element and create a Chart.js chart
 const plottingCanvas = document.getElementById('plotting-canvas').getContext('2d');
 
 let angleChart = new Chart(plottingCanvas, {
-    type: 'line', // Use a line chart for time and angle data
+    type: 'scatter',
     data: {
-        labels: timeData,  // Time labels (empty initially)
-        datasets: [
-            {
-                label: 'Angle vs. Time',  // Chart label
-                data: angleData,   // Angle data (empty initially)
-                borderColor: 'blue',
-                fill: false  // Do not fill the area under the line
-            }
-        ]
+        datasets: plotDataSets,
     },
     options: {
+        responsive: true,
         scales: {
             x: {
                 title: {
@@ -111,6 +104,7 @@ function updatePendulumCanvas() {
             ctx.fill(playButton);
             ctx.fillStyle = "#8C8303";
             ctx.fill(stopButton);
+            scatterPlotData = [{ x: time, y: pendulumAngle }];
             simulatePendulum();
         }
     })
@@ -130,11 +124,14 @@ function updatePendulumCanvas() {
             ctx.fill(playButton);
             document.getElementById("angle_input").value = pendulumAngle;
             document.getElementById("angleDisplayedValue").textContent = document.getElementById("angle_input").value;
+            if (time > 0) {
+                simNum++;
+                scatterPlotData = [];
+                plotDataSets.push({ label: "Sim " + (simNum + 1).toString(), data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true });
+            }
             angularVelocity = 0; // intial value for angular velocity
             time = 0; // seconds
-            timeData = [];
-            angleData = [];
-            angularVelocityData = [];
+
         }
     })
 }
@@ -206,9 +203,13 @@ function drawPendulum() {
         if (isPointInMass) {
             isDragging = true;
             simulationActive = false;
-            timeData = [];
-            angleData = [];
-            angularVelocityData = [];
+            if (time > 0) {
+                simNum++;
+                scatterPlotData = [];
+                plotDataSets.push({ label: "Sim " + (simNum + 1).toString(), data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true });
+            }
+            angularVelocity = 0; // intial value for angular velocity
+            time = 0; // seconds
         }
     })
 
@@ -284,39 +285,9 @@ function smallAngleApproxSim() {
             console.log("with friction discriminant == 0, time: ", time, "pendulumAngle: ", pendulumAngle);
         }
     }
-    timeData.push(time.toFixed(2));
-    angleData.push(pendulumAngle);
-    angularVelocityData.push(angularVelocity);
+    scatterPlotData.push({ x: time.toFixed(2), y: pendulumAngle });
     // Update the chart with new data
-    angleChart.data.labels = timeData;            // Set the time labels
-    angleChart.data.datasets[0].data = angleData; // Set the angle data
-
-    // Update the chart
-    angleChart.update();
-    requestAnimationFrame(updatePendulumCanvas);
-}
-
-function eulersMethodSim() {
-    let gravValue = document.getElementById("gravity_input").value;
-    let length = document.getElementById("length_input").value;
-    let frictionFactor = document.getElementById("friction_input").value;
-    let mass = document.getElementById("mass_input").value;
-    let h = timestep;
-    let theta = pendulumAngle * (Math.PI / 180);
-    const thetaNew = theta + h * angularVelocity;
-    const omegaNew = angularVelocity + (((-gravValue / length) * Math.sin(theta)) - (frictionFactor * angularVelocity / (mass * length ** 2))) * h;
-    time = time + timestep;
-    pendulumAngle = thetaNew * (180 / Math.PI);
-    angularVelocity = omegaNew;
-
-    time = time + timestep;
-    timeData.push(time.toFixed(2));
-    angleData.push(pendulumAngle);
-    angularVelocityData.push(angularVelocity);
-    // Update the chart with new data
-    angleChart.data.labels = timeData;            // Set the time labels
-    angleChart.data.datasets[0].data = angleData; // Set the angle data
-
+    angleChart.data.datasets[simNum].data = scatterPlotData;
     // Update the chart
     angleChart.update();
     requestAnimationFrame(updatePendulumCanvas);
@@ -351,16 +322,13 @@ function rungeKuttaSim() {
     angularVelocity = omega;
     pendulumAngle = theta * (180 / Math.PI);
     time = time + timestep;
-    timeData.push(time.toFixed(2));
-    angleData.push(pendulumAngle);
-    angularVelocityData.push(angularVelocity);
-    // Update the chart with new data
-    angleChart.data.labels = timeData;            // Set the time labels
-    angleChart.data.datasets[0].data = angleData; // Set the angle data
 
+    scatterPlotData.push({ x: time.toFixed(2), y: pendulumAngle });
+
+    // Update the chart with new data
+    angleChart.data.datasets[simNum].data = scatterPlotData;
     // Update the chart
     angleChart.update();
-    console.log("time: ", time);
     requestAnimationFrame(updatePendulumCanvas)
 }
 
@@ -368,9 +336,6 @@ function simulatePendulum() {
     var solver = document.getElementById("solverSelect").value;
     if (solver == "small_angle_approx") {
         smallAngleApproxSim();
-    }
-    else if (solver == "euler") {
-        eulersMethodSim();
     }
     else if (solver == "runge_kutta") {
         rungeKuttaSim();
@@ -380,7 +345,6 @@ function simulatePendulum() {
         alert("Unknown solver")
     }
 }
-
 
 // JavaScript code to display the selected value for each control
 const sliders = document.querySelectorAll('input[type="range"]');
@@ -393,21 +357,37 @@ sliders.forEach((slider, index) => {
         pendulumAngle = document.getElementById("angle_input").value;
         updatePendulumCanvas();
         simulationActive = false;
-        timeData = [];
-        angleData = [];
-        angularVelocityData = [];
+        if (time > 0) {
+            simNum++;
+            scatterPlotData = [];
+            plotDataSets.push({ label: "Sim " + (simNum + 1).toString(), data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true });
+        }
+        time = 0;
+        angularVelocity = 0;
     });
 });
 
 document.getElementById("solverSelect").addEventListener('input', function () {
     simulationActive = false;
-    timeData = [];
-    angleData = [];
-    angularVelocityData = [];
+    if (time > 0) {
+        simNum++;
+        scatterPlotData = [];
+        plotDataSets.push({ label: "Sim " + (simNum + 1).toString(), data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true });
+    }
+    time = 0;
+    angularVelocity = 0;
     updatePendulumCanvas()
 })
 
 updatePendulumCanvas()
 
+document.getElementById("clearButton").addEventListener("click", clearPlot);
+
+function clearPlot() {
+    simNum = 0;
+    angleChart.data.datasets = [{ label: "Sim 1", data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true }];
+    angleChart.update();
+
+}
 
 
