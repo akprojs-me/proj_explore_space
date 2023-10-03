@@ -11,6 +11,7 @@ const timestep = 0.005; // seconds, keeping this constant
 var timeData = [];
 var angleData = [];
 var angularVelocityData = [];
+var prevData = {};
 
 
 // Get the canvas element and create a Chart.js chart
@@ -51,8 +52,6 @@ let angleChart = new Chart(plottingCanvas, {
         }
     }
 });
-
-
 
 // Draw out the state of the pendulum
 function updatePendulumCanvas() {
