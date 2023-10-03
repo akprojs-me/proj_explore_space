@@ -78,7 +78,6 @@ function updatePendulumCanvas() {
         }
     })
 
-    console.log("outside first event listener");
     // Add listener for stop button click
     canvas.addEventListener("click", (event) => {
         // Check whether point inside stop button
@@ -95,7 +94,6 @@ function updatePendulumCanvas() {
         }
     })
 }
-
 
 function drawPendulum() {
     ctx.fillStyle = "#8C8303";
@@ -146,18 +144,70 @@ function drawPendulum() {
     let pendulumMassRadius = scaleMassRadius * specifiedMass;
 
 
+    let pendulumMass = new Path2D();
     ctx.fillStyle = "#C2462E";
     let centerX = anchorMiddleX + lineX + pendulumMassRadius * Math.sin(specifiedAngleRads);
     let centerY = anchorMiddleY + lineY + pendulumMassRadius * Math.cos(specifiedAngleRads);
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, pendulumMassRadius, 0, 2 * Math.PI);
+
+    pendulumMass.arc(centerX, centerY, pendulumMassRadius, 0, 2 * Math.PI);
     console.log("centerX", centerX, "centerY", centerY);
     console.log("pendulumMassRadius", pendulumMassRadius);
-    ctx.fill();
+    ctx.fill(pendulumMass);
     console.log("fill of circle");
+
+    let isDragging = false;
+
+    console.log("document.getElementById('angleDisplayedValue')", document.getElementById("angleDisplayedValue"));
+
+    // Add listener for dragging the pendulum mass to a different angle
+    canvas.addEventListener("mousedown", (event) => {
+        // Check whether point inside pendulum mass
+        console.log("mousedown check");
+        const rect = canvas.getBoundingClientRect();
+        const x = (event.clientX - rect.left) * canvas.width / rect.width;
+        const y = (event.clientY - rect.top) * canvas.height / rect.height;
+        const isPointInMass = ctx.isPointInPath(pendulumMass, x, y);
+        console.log("isPointInMass", isPointInMass)
+
+        if (isPointInMass) {
+            isDragging = true;
+            simulationActive = false;
+        }
+    })
+
+    canvas.addEventListener("mousemove", (event) => {
+        if (isDragging) {
+            console.log("mousemove dragging active");
+            const rect = canvas.getBoundingClientRect();
+            const x = (event.clientX - rect.left) * canvas.width / rect.width;
+            const y = (event.clientY - rect.top) * canvas.height / rect.height;
+            pendulumAngle = Math.round(Math.atan((x - anchorMiddleX) / (y - anchorMiddleY)) * (180 / Math.PI));
+            let diffX = x - anchorMiddleX;
+            let diffY = y - anchorMiddleY;
+            document.getElementById("angle_input").value = pendulumAngle;
+            document.getElementById("angleDisplayedValue").textContent = document.getElementById("angle_input").value;
+        }
+    })
+
+    canvas.addEventListener("mouseup", (event) => {
+        if (isDragging) {
+            const rect = canvas.getBoundingClientRect();
+            const x = (event.clientX - rect.left) * canvas.width / rect.width;
+            const y = (event.clientY - rect.top) * canvas.height / rect.height;
+            pendulumAngle = Math.round(Math.atan((x - anchorMiddleX) / (y - anchorMiddleY)) * (180 / Math.PI));
+            let diffX = x - anchorMiddleX;
+            let diffY = y - anchorMiddleY;
+            console.log("diffX", diffX, "diffY", diffY, "ratio", diffX / diffY);
+            document.getElementById("angle_input").value = pendulumAngle;
+            document.getElementById("angleDisplayedValue").textContent = document.getElementById("angle_input").value;
+            isDragging = false;
+            console.log("mouseup pendulumAngle set", pendulumAngle);
+            updatePendulumCanvas()
+        }
+    })
 }
 
-function simulatePendulum() {
+function smallAngleApproxSim() {
     let timestep = 0.005; // seconds, keeping this constant
     time = time + timestep;
     // Using small angle approximation (only really valid for small angles) - acts as a simple harmonic oscillator
@@ -168,6 +218,10 @@ function simulatePendulum() {
     pendulumAngle = specifiedAngle * Math.cos(omega * time);
     console.log("in simulatePendulum pendulumAngle", pendulumAngle);
     requestAnimationFrame(updatePendulumCanvas)
+}
+
+function simulatePendulum() {
+    smallAngleApproxSim();
 }
 
 
