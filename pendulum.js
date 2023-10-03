@@ -91,13 +91,25 @@ function updatePendulumCanvas() {
         simulatePendulum();
     }
 
-    function handlePlay(evt) {
-        evt.preventDefault();
+    function handlePlay(event) {
+        event.preventDefault();
         // Check whether point inside play button
+        let isPointInPlay = false;
         const rect = canvas.getBoundingClientRect();
-        const x = (event.clientX - rect.left) * canvas.width / rect.width;
-        const y = (event.clientY - rect.top) * canvas.height / rect.height;
-        const isPointInPlay = ctx.isPointInPath(playButton, x, y);
+        if (event.type == "touchstart") {
+            const touch = event.touches[0];
+            const x = (touch.clientX - rect.left) * canvas.width / rect.width;
+            const y = (touch.clientY - rect.top) * canvas.height / rect.height;
+            isPointInPlay = ctx.isPointInPath(playButton, x, y);
+        }
+        else {
+            const x = (event.clientX - rect.left) * canvas.width / rect.width;
+            const y = (event.clientY - rect.top) * canvas.height / rect.height;
+            console.log("x: ", x, "y: ", y);
+            isPointInPlay = ctx.isPointInPath(playButton, x, y);
+        }
+
+        console.log("isPointInPlay: ", isPointInPlay);
         if (isPointInPlay && !simulationActive) {
             simulationActive = true;
             ctx.fillStyle = "#767676";
@@ -114,13 +126,23 @@ function updatePendulumCanvas() {
     canvas.addEventListener("touchstart", handlePlay);
     canvas.addEventListener("click", handlePlay);
 
-    function handleStop(evt) {
-        evt.preventDefault();
+    function handleStop(event) {
+        event.preventDefault();
         // Check whether point inside stop button
         const rect = canvas.getBoundingClientRect();
-        const x = (event.clientX - rect.left) * canvas.width / rect.width;
-        const y = (event.clientY - rect.top) * canvas.height / rect.height;
-        const isPointInStop = ctx.isPointInPath(stopButton, x, y);
+        let isPointInStop = false;
+        if (event.type == "touchstart") {
+            const touch = event.touches[0];
+            const x = (touch.clientX - rect.left) * canvas.width / rect.width;
+            const y = (touch.clientY - rect.top) * canvas.height / rect.height;
+            isPointInStop = ctx.isPointInPath(stopButton, x, y);
+        }
+        else {
+            const x = (event.clientX - rect.left) * canvas.width / rect.width;
+            const y = (event.clientY - rect.top) * canvas.height / rect.height;
+            isPointInStop = ctx.isPointInPath(stopButton, x, y);
+        }
+
         if (isPointInStop && simulationActive) {
             simulationActive = false;
             ctx.fillStyle = "#767676";
@@ -201,13 +223,23 @@ function drawPendulum() {
 
     let isDragging = false;
 
-    function dragStart(evt) {
-        evt.preventDefault();
+    function dragStart(event) {
+        event.preventDefault();
         // Check whether point inside pendulum mass
+        var isPointInMass = false;
         const rect = canvas.getBoundingClientRect();
-        const x = (event.clientX - rect.left) * canvas.width / rect.width;
-        const y = (event.clientY - rect.top) * canvas.height / rect.height;
-        const isPointInMass = ctx.isPointInPath(pendulumMass, x, y);
+
+        if (event.type == "touchstart") {
+            const touch = event.touches[0];
+            const x = (touch.clientX - rect.left) * canvas.width / rect.width;
+            const y = (touch.clientY - rect.top) * canvas.height / rect.height;
+            isPointInMass = ctx.isPointInPath(pendulumMass, x, y);
+        }
+        else {
+            const x = (event.clientX - rect.left) * canvas.width / rect.width;
+            const y = (event.clientY - rect.top) * canvas.height / rect.height;
+            isPointInMass = ctx.isPointInPath(pendulumMass, x, y);
+        }
 
         if (isPointInMass) {
             isDragging = true;
@@ -226,15 +258,21 @@ function drawPendulum() {
     canvas.addEventListener("touchstart", dragStart);
     canvas.addEventListener("mousedown", dragStart);
 
-    function updateDragging(evt) {
-        evt.preventDefault();
+    function updateDragging(event) {
+        event.preventDefault();
         if (isDragging) {
             const rect = canvas.getBoundingClientRect();
-            const x = (event.clientX - rect.left) * canvas.width / rect.width;
-            const y = (event.clientY - rect.top) * canvas.height / rect.height;
-            pendulumAngle = Math.round(Math.atan((x - anchorMiddleX) / (y - anchorMiddleY)) * (180 / Math.PI));
-            let diffX = x - anchorMiddleX;
-            let diffY = y - anchorMiddleY;
+            if (event.type == "touchstart") {
+                const touch = event.touches[0];
+                const x = (touch.clientX - rect.left) * canvas.width / rect.width;
+                const y = (touch.clientY - rect.top) * canvas.height / rect.height;
+                pendulumAngle = Math.round(Math.atan((x - anchorMiddleX) / (y - anchorMiddleY)) * (180 / Math.PI));
+            }
+            else {
+                const x = (event.clientX - rect.left) * canvas.width / rect.width;
+                const y = (event.clientY - rect.top) * canvas.height / rect.height;
+                pendulumAngle = Math.round(Math.atan((x - anchorMiddleX) / (y - anchorMiddleY)) * (180 / Math.PI));
+            }
             document.getElementById("angle_input").value = pendulumAngle;
             document.getElementById("angleDisplayedValue").textContent = document.getElementById("angle_input").value;
         }
@@ -243,15 +281,22 @@ function drawPendulum() {
     canvas.addEventListener("touchmove", updateDragging);
     canvas.addEventListener("mousemove", updateDragging);
 
-    function stopDragging(evt) {
-        evt.preventDefault();
+    function stopDragging(event) {
+        event.preventDefault();
         if (isDragging) {
             const rect = canvas.getBoundingClientRect();
-            const x = (event.clientX - rect.left) * canvas.width / rect.width;
-            const y = (event.clientY - rect.top) * canvas.height / rect.height;
-            pendulumAngle = Math.round(Math.atan((x - anchorMiddleX) / (y - anchorMiddleY)) * (180 / Math.PI));
-            let diffX = x - anchorMiddleX;
-            let diffY = y - anchorMiddleY;
+            if (event.type == "touchstart") {
+                const touch = event.touches[0];
+                const x = (touch.clientX - rect.left) * canvas.width / rect.width;
+                const y = (touch.clientY - rect.top) * canvas.height / rect.height;
+                pendulumAngle = Math.round(Math.atan((x - anchorMiddleX) / (y - anchorMiddleY)) * (180 / Math.PI));
+            }
+            else {
+                const x = (event.clientX - rect.left) * canvas.width / rect.width;
+                const y = (event.clientY - rect.top) * canvas.height / rect.height;
+                pendulumAngle = Math.round(Math.atan((x - anchorMiddleX) / (y - anchorMiddleY)) * (180 / Math.PI));
+            }
+
             document.getElementById("angle_input").value = pendulumAngle;
             document.getElementById("angleDisplayedValue").textContent = document.getElementById("angle_input").value;
             isDragging = false;
@@ -406,8 +451,8 @@ updatePendulumCanvas()
 document.getElementById("clearButton").addEventListener("touchstart", clearPlot);
 document.getElementById("clearButton").addEventListener("click", clearPlot);
 
-function clearPlot(evt) {
-    evt.preventDefault();
+function clearPlot(event) {
+    event.preventDefault();
     simNum = 0;
     angleChart.data.datasets = [{ label: "Sim 1", data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true }];
     angleChart.update();
