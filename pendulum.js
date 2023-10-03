@@ -91,8 +91,8 @@ function updatePendulumCanvas() {
         simulatePendulum();
     }
 
-    // Add listener for play button click
-    canvas.addEventListener("click", (event) => {
+    function handlePlay(evt) {
+        evt.preventDefault();
         // Check whether point inside play button
         const rect = canvas.getBoundingClientRect();
         const x = (event.clientX - rect.left) * canvas.width / rect.width;
@@ -107,10 +107,15 @@ function updatePendulumCanvas() {
             scatterPlotData = [{ x: time, y: pendulumAngle }];
             simulatePendulum();
         }
-    })
 
-    // Add listener for stop button click
-    canvas.addEventListener("click", (event) => {
+    }
+
+    // Add listener for play button click
+    canvas.addEventListener("touchstart", handlePlay);
+    canvas.addEventListener("click", handlePlay);
+
+    function handleStop(evt) {
+        evt.preventDefault();
         // Check whether point inside stop button
         const rect = canvas.getBoundingClientRect();
         const x = (event.clientX - rect.left) * canvas.width / rect.width;
@@ -131,9 +136,13 @@ function updatePendulumCanvas() {
             }
             angularVelocity = 0; // intial value for angular velocity
             time = 0; // seconds
-
         }
-    })
+    }
+
+    // Add listener for stop button click
+    canvas.addEventListener("touchstart", handleStop);
+    canvas.addEventListener("click", handleStop);
+
 }
 
 function drawPendulum() {
@@ -192,8 +201,8 @@ function drawPendulum() {
 
     let isDragging = false;
 
-    // Add listener for dragging the pendulum mass to a different angle
-    canvas.addEventListener("mousedown", (event) => {
+    function dragStart(evt) {
+        evt.preventDefault();
         // Check whether point inside pendulum mass
         const rect = canvas.getBoundingClientRect();
         const x = (event.clientX - rect.left) * canvas.width / rect.width;
@@ -211,9 +220,14 @@ function drawPendulum() {
             angularVelocity = 0; // intial value for angular velocity
             time = 0; // seconds
         }
-    })
+    }
 
-    canvas.addEventListener("mousemove", (event) => {
+    // Add listener for dragging the pendulum mass to a different angle
+    canvas.addEventListener("touchstart", dragStart);
+    canvas.addEventListener("mousedown", dragStart);
+
+    function updateDragging(evt) {
+        evt.preventDefault();
         if (isDragging) {
             const rect = canvas.getBoundingClientRect();
             const x = (event.clientX - rect.left) * canvas.width / rect.width;
@@ -224,9 +238,13 @@ function drawPendulum() {
             document.getElementById("angle_input").value = pendulumAngle;
             document.getElementById("angleDisplayedValue").textContent = document.getElementById("angle_input").value;
         }
-    })
+    }
 
-    canvas.addEventListener("mouseup", (event) => {
+    canvas.addEventListener("touchmove", updateDragging);
+    canvas.addEventListener("mousemove", updateDragging);
+
+    function stopDragging(evt) {
+        evt.preventDefault();
         if (isDragging) {
             const rect = canvas.getBoundingClientRect();
             const x = (event.clientX - rect.left) * canvas.width / rect.width;
@@ -239,8 +257,12 @@ function drawPendulum() {
             isDragging = false;
             updatePendulumCanvas()
         }
-    })
+    }
+
+    canvas.addEventListener("touchend", stopDragging);
+    canvas.addEventListener("mouseup", stopDragging);
 }
+
 function smallAngleApproxSim() {
     time = time + timestep;
     // Using small angle approximation (only really valid for small angles) - acts as a simple harmonic oscillator
@@ -381,9 +403,11 @@ document.getElementById("solverSelect").addEventListener('input', function () {
 
 updatePendulumCanvas()
 
+document.getElementById("clearButton").addEventListener("touchstart", clearPlot);
 document.getElementById("clearButton").addEventListener("click", clearPlot);
 
-function clearPlot() {
+function clearPlot(evt) {
+    evt.preventDefault();
     simNum = 0;
     angleChart.data.datasets = [{ label: "Sim 1", data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true }];
     angleChart.update();
