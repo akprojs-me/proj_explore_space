@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 
 var simulationActive = false;
 var pendulumAngle = document.getElementById("angle_input").value;
+var angularVelocity = 0; // intial value for angular velocity
 var time = 0; // seconds
 
 // Draw out the state of the pendulum
@@ -23,19 +24,12 @@ function updatePendulumCanvas() {
     ctx.strokeStyle = "black";
     ctx.lineWidth = 1;
     ctx.strokeRect(startingX, startingY, buttonsWidth, buttonsHeight);
-    console.log("startingX: ", startingX);
-    console.log("startingY: ", startingY);
-    console.log("canvas width: ", canvas.width)
-    console.log("canvas height: ", canvas.height)
 
     let playButton = new Path2D();
     playButton.strokeStyle = "#297511";
     playButton.moveTo(startingX + padButtons, startingY + padButtons);
     playButton.lineTo(startingX + padButtons, startingY + padButtons + buttonHeight);
     playButton.lineTo(startingX + padButtons + buttonHeight / 2.0, startingY + padButtons + buttonHeight / 2.0);
-    console.log("triangle point 1: ", startingX + padButtons, startingY + padButtons);
-    console.log("triangle point 2: ", startingX + padButtons, startingY + padButtons + buttonHeight);
-    console.log("triangle point 3: ", startingX + padButtons + buttonHeight / 2.0, startingY + padButtons + buttonHeight / 2.0);
     playButton.closePath();
     ctx.stroke(playButton);
 
@@ -53,7 +47,6 @@ function updatePendulumCanvas() {
     stopButton.rect(startingX + buttonsWidth / 2 + padButtons, startingY + padButtons, buttonHeight, buttonHeight);
     ctx.fill(stopButton);
 
-    console.log("simulationActive at end of function", simulationActive)
     drawPendulum();
     if (simulationActive) {
         simulatePendulum();
@@ -67,9 +60,7 @@ function updatePendulumCanvas() {
         const y = (event.clientY - rect.top) * canvas.height / rect.height;
         const isPointInPlay = ctx.isPointInPath(playButton, x, y);
         if (isPointInPlay && !simulationActive) {
-            console.log("setting simulation active to true")
             simulationActive = true;
-            console.log("simulationActive", simulationActive);
             ctx.fillStyle = "#767676";
             ctx.fill(playButton);
             ctx.fillStyle = "#8C8303";
@@ -91,6 +82,10 @@ function updatePendulumCanvas() {
             ctx.fill(stopButton);
             ctx.fillStyle = "#92D050";
             ctx.fill(playButton);
+            document.getElementById("angle_input").value = pendulumAngle;
+            document.getElementById("angleDisplayedValue").textContent = document.getElementById("angle_input").value;
+            angularVelocity = 0; // intial value for angular velocity
+            time = 0; // seconds
         }
     })
 }
@@ -119,10 +114,8 @@ function drawPendulum() {
     ctx.fillRect(canvas.width / 2.0 - anchorWidth / 2.0, anchorHeight, anchorWidth, anchorHeight);
 
     let specifiedLength = document.getElementById("length_input").value;
-    console.log("specifiedLength", specifiedLength);
 
     let specifiedAngleRads = pendulumAngle * (Math.PI / 180)
-    console.log("specifiedAngleRads", specifiedAngleRads);
 
     // set pixels per 1 m specified for length
     let lengthScale = 400;
@@ -133,7 +126,6 @@ function drawPendulum() {
     // Calculate endpoint of line based on angle specified
     let lineX = (lengthScale * specifiedLength) * Math.sin(specifiedAngleRads);
     let lineY = (lengthScale * specifiedLength) * Math.cos(specifiedAngleRads);
-    console.log("line to ", anchorMiddleX + lineX, anchorMiddleY + lineY);
     ctx.lineTo(anchorMiddleX + lineX, anchorMiddleY + lineY);
     ctx.stroke();
 
@@ -150,24 +142,17 @@ function drawPendulum() {
     let centerY = anchorMiddleY + lineY + pendulumMassRadius * Math.cos(specifiedAngleRads);
 
     pendulumMass.arc(centerX, centerY, pendulumMassRadius, 0, 2 * Math.PI);
-    console.log("centerX", centerX, "centerY", centerY);
-    console.log("pendulumMassRadius", pendulumMassRadius);
     ctx.fill(pendulumMass);
-    console.log("fill of circle");
 
     let isDragging = false;
-
-    console.log("document.getElementById('angleDisplayedValue')", document.getElementById("angleDisplayedValue"));
 
     // Add listener for dragging the pendulum mass to a different angle
     canvas.addEventListener("mousedown", (event) => {
         // Check whether point inside pendulum mass
-        console.log("mousedown check");
         const rect = canvas.getBoundingClientRect();
         const x = (event.clientX - rect.left) * canvas.width / rect.width;
         const y = (event.clientY - rect.top) * canvas.height / rect.height;
         const isPointInMass = ctx.isPointInPath(pendulumMass, x, y);
-        console.log("isPointInMass", isPointInMass)
 
         if (isPointInMass) {
             isDragging = true;
@@ -177,7 +162,6 @@ function drawPendulum() {
 
     canvas.addEventListener("mousemove", (event) => {
         if (isDragging) {
-            console.log("mousemove dragging active");
             const rect = canvas.getBoundingClientRect();
             const x = (event.clientX - rect.left) * canvas.width / rect.width;
             const y = (event.clientY - rect.top) * canvas.height / rect.height;
@@ -197,18 +181,15 @@ function drawPendulum() {
             pendulumAngle = Math.round(Math.atan((x - anchorMiddleX) / (y - anchorMiddleY)) * (180 / Math.PI));
             let diffX = x - anchorMiddleX;
             let diffY = y - anchorMiddleY;
-            console.log("diffX", diffX, "diffY", diffY, "ratio", diffX / diffY);
             document.getElementById("angle_input").value = pendulumAngle;
             document.getElementById("angleDisplayedValue").textContent = document.getElementById("angle_input").value;
             isDragging = false;
-            console.log("mouseup pendulumAngle set", pendulumAngle);
             updatePendulumCanvas()
         }
     })
 }
-
+const timestep = 0.005; // seconds, keeping this constant
 function smallAngleApproxSim() {
-    let timestep = 0.005; // seconds, keeping this constant
     time = time + timestep;
     // Using small angle approximation (only really valid for small angles) - acts as a simple harmonic oscillator
     let gravValue = document.getElementById("gravity_input").value;
@@ -216,12 +197,68 @@ function smallAngleApproxSim() {
     let specifiedAngle = document.getElementById("angle_input").value;
     let omega = Math.sqrt(gravValue / length);
     pendulumAngle = specifiedAngle * Math.cos(omega * time);
-    console.log("in simulatePendulum pendulumAngle", pendulumAngle);
+    requestAnimationFrame(updatePendulumCanvas);
+}
+
+function eulersMethodSim() {
+    let gravValue = document.getElementById("gravity_input").value;
+    let length = document.getElementById("length_input").value;
+    let h = timestep;
+    let theta = pendulumAngle * (Math.PI / 180);
+    const thetaNew = theta + h * angularVelocity;
+    const omegaNew = angularVelocity - (gravValue / length) * Math.sin(theta) * h;
+    time = time + timestep;
+    pendulumAngle = thetaNew * (180 / Math.PI);
+    angularVelocity = omegaNew;
+
+    requestAnimationFrame(updatePendulumCanvas);
+}
+
+function rungeKuttaSim() {
+    let g = document.getElementById("gravity_input").value;
+    let L = document.getElementById("length_input").value;
+    let h = timestep;
+    let omega = angularVelocity;
+    let theta = pendulumAngle * (Math.PI / 180);
+
+
+    // Calculate the four RK4 increments
+    const k1_theta = h * omega;
+    const k1_omega = h * (-(g / L) * Math.sin(theta));
+
+    const k2_theta = h * (omega + 0.5 * k1_omega);
+    const k2_omega = h * (-(g / L) * Math.sin(theta + 0.5 * k1_theta));
+
+    const k3_theta = h * (omega + 0.5 * k2_omega);
+    const k3_omega = h * (-(g / L) * Math.sin(theta + 0.5 * k2_theta));
+
+    const k4_theta = h * (omega + k3_omega);
+    const k4_omega = h * (-(g / L) * Math.sin(theta + k3_theta));
+
+    // Update theta and omega using the weighted average of the increments
+    theta = theta + (k1_theta + 2 * k2_theta + 2 * k3_theta + k4_theta) / 6;
+    omega = omega + (k1_omega + 2 * k2_omega + 2 * k3_omega + k4_omega) / 6;
+    angularVelocity = omega;
+    pendulumAngle = theta * (180 / Math.PI);
     requestAnimationFrame(updatePendulumCanvas)
+
 }
 
 function simulatePendulum() {
-    smallAngleApproxSim();
+    var solver = document.getElementById("solverSelect").value;
+    if (solver == "small_angle_approx") {
+        smallAngleApproxSim();
+    }
+    else if (solver == "euler") {
+        eulersMethodSim();
+    }
+    else if (solver == "runge_kutta") {
+        rungeKuttaSim();
+    }
+    else {
+        console.log("unknown solver")
+        alert("Unknown solver")
+    }
 }
 
 
@@ -238,6 +275,11 @@ sliders.forEach((slider, index) => {
         simulationActive = false;
     });
 });
+
+document.getElementById("solverSelect").addEventListener('input', function () {
+    simulationActive = false;
+    updatePendulumCanvas()
+})
 
 updatePendulumCanvas()
 
