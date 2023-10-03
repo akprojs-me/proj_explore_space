@@ -6,6 +6,53 @@ var simulationActive = false;
 var pendulumAngle = document.getElementById("angle_input").value;
 var angularVelocity = 0; // intial value for angular velocity
 var time = 0; // seconds
+const timestep = 0.005; // seconds, keeping this constant
+
+var timeData = [];
+var angleData = [];
+var angularVelocityData = [];
+
+
+// Get the canvas element and create a Chart.js chart
+const plottingCanvas = document.getElementById('plotting-canvas').getContext('2d');
+
+let angleChart = new Chart(plottingCanvas, {
+    type: 'line', // Use a line chart for time and angle data
+    data: {
+        labels: timeData,  // Time labels (empty initially)
+        datasets: [
+            {
+                label: 'Angle vs. Time',  // Chart label
+                data: angleData,   // Angle data (empty initially)
+                borderColor: 'blue',
+                fill: false  // Do not fill the area under the line
+            }
+        ]
+    },
+    options: {
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Time (s)',
+                    align: 'center'
+                },
+                grid: {
+                    display: false
+                },
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Angle (degrees)',
+                    align: 'center'
+                }
+            }
+        }
+    }
+});
+
+
 
 // Draw out the state of the pendulum
 function updatePendulumCanvas() {
@@ -86,6 +133,9 @@ function updatePendulumCanvas() {
             document.getElementById("angleDisplayedValue").textContent = document.getElementById("angle_input").value;
             angularVelocity = 0; // intial value for angular velocity
             time = 0; // seconds
+            timeData = [];
+            angleData = [];
+            angularVelocityData = [];
         }
     })
 }
@@ -157,6 +207,9 @@ function drawPendulum() {
         if (isPointInMass) {
             isDragging = true;
             simulationActive = false;
+            timeData = [];
+            angleData = [];
+            angularVelocityData = [];
         }
     })
 
@@ -188,7 +241,6 @@ function drawPendulum() {
         }
     })
 }
-const timestep = 0.005; // seconds, keeping this constant
 function smallAngleApproxSim() {
     time = time + timestep;
     // Using small angle approximation (only really valid for small angles) - acts as a simple harmonic oscillator
@@ -233,6 +285,15 @@ function smallAngleApproxSim() {
             console.log("with friction discriminant == 0, time: ", time, "pendulumAngle: ", pendulumAngle);
         }
     }
+    timeData.push(time.toFixed(2));
+    angleData.push(pendulumAngle);
+    angularVelocityData.push(angularVelocity);
+    // Update the chart with new data
+    angleChart.data.labels = timeData;            // Set the time labels
+    angleChart.data.datasets[0].data = angleData; // Set the angle data
+
+    // Update the chart
+    angleChart.update();
     requestAnimationFrame(updatePendulumCanvas);
 }
 
@@ -249,6 +310,16 @@ function eulersMethodSim() {
     pendulumAngle = thetaNew * (180 / Math.PI);
     angularVelocity = omegaNew;
 
+    time = time + timestep;
+    timeData.push(time.toFixed(2));
+    angleData.push(pendulumAngle);
+    angularVelocityData.push(angularVelocity);
+    // Update the chart with new data
+    angleChart.data.labels = timeData;            // Set the time labels
+    angleChart.data.datasets[0].data = angleData; // Set the angle data
+
+    // Update the chart
+    angleChart.update();
     requestAnimationFrame(updatePendulumCanvas);
 }
 
@@ -280,6 +351,17 @@ function rungeKuttaSim() {
     omega = omega + (k1_omega + 2 * k2_omega + 2 * k3_omega + k4_omega) / 6;
     angularVelocity = omega;
     pendulumAngle = theta * (180 / Math.PI);
+    time = time + timestep;
+    timeData.push(time.toFixed(2));
+    angleData.push(pendulumAngle);
+    angularVelocityData.push(angularVelocity);
+    // Update the chart with new data
+    angleChart.data.labels = timeData;            // Set the time labels
+    angleChart.data.datasets[0].data = angleData; // Set the angle data
+
+    // Update the chart
+    angleChart.update();
+    console.log("time: ", time);
     requestAnimationFrame(updatePendulumCanvas)
 }
 
@@ -312,13 +394,21 @@ sliders.forEach((slider, index) => {
         pendulumAngle = document.getElementById("angle_input").value;
         updatePendulumCanvas();
         simulationActive = false;
+        timeData = [];
+        angleData = [];
+        angularVelocityData = [];
     });
 });
 
 document.getElementById("solverSelect").addEventListener('input', function () {
     simulationActive = false;
+    timeData = [];
+    angleData = [];
+    angularVelocityData = [];
     updatePendulumCanvas()
 })
 
 updatePendulumCanvas()
+
+
 
