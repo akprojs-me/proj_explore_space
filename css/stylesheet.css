@@ -454,7 +454,7 @@ footer {
 
   .pendulum_controls {
     display: grid;
-    grid-template-columns: repeat(5, fr);
+    grid-template-columns: repeat(6, fr);
     grid-template-rows: auto, auto, auto;
     gap: 1rem;
     text-align: center;
@@ -462,7 +462,7 @@ footer {
 
   .pendulum_controls>h2 {
     grid-row: 1;
-    grid-column: 1 / span 5;
+    grid-column: 1 / span 6;
   }
 
   .pendulum_controls label {

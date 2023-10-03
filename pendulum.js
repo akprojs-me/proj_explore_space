@@ -194,9 +194,46 @@ function smallAngleApproxSim() {
     // Using small angle approximation (only really valid for small angles) - acts as a simple harmonic oscillator
     let gravValue = document.getElementById("gravity_input").value;
     let length = document.getElementById("length_input").value;
+    let frictionFactor = document.getElementById("friction_input").value;
+    let mass = document.getElementById("mass_input").value;
     let specifiedAngle = document.getElementById("angle_input").value;
     let omega = Math.sqrt(gravValue / length);
-    pendulumAngle = specifiedAngle * Math.cos(omega * time);
+    // using initial conditions of at t = 0, initial angle is specifiedAngle, and angular velocity is 0
+    if (frictionFactor == 0) {
+        pendulumAngle = specifiedAngle * Math.cos(omega * time);
+    }
+    else {
+        // adding a term for friction where the frictionFactor is multiplied by angular velocity to get the torque related to friction
+        let p = frictionFactor / (mass * length ** 2);
+        let q = gravValue / length;
+        let discriminant = p ** 2 - 4 * q;
+        if (discriminant > 0) {
+            // two real roots
+            let r1 = (-p + Math.sqrt(discriminant)) / 2.0;
+            let r2 = (-p - Math.sqrt(discriminant)) / 2.0;
+            let A = specifiedAngle / (1 - (r1 / r2));
+            let B = (-A * r1) / r2;
+            pendulumAngle = A * Math.exp(r1 * time) + B * Math.exp(r2 * time);
+            console.log("with friction discriminant > 0, time: ", time, "pendulumAngle: ", pendulumAngle);
+        }
+        else if (discriminant < 0) {
+            // two complex roots (r1 = v + wi, r2 = v - wi)
+            let v = -p / 2.0;
+            let w = Math.sqrt(-1 * discriminant) / 2.0;
+            console.log("v: ", v, "w: ", w);
+            pendulumAngle = Math.exp(v * time) * (specifiedAngle * Math.cos(w * time) - (v * specifiedAngle / w) * Math.sin(w * time));
+            console.log("with friction discriminant < 0, time: ", time, "pendulumAngle: ", pendulumAngle);
+        }
+        else {
+            // equal to zero, one real root
+            let r = -p / 2.0;
+            let A = specifiedAngle;
+            let B = -A * r;
+            pendulumAngle = A * Math.exp(r * time) + B * time * Math.exp(r * time);
+            console.log("with friction discriminant == 0, time: ", time, "pendulumAngle: ", pendulumAngle);
+
+        }
+    }
     requestAnimationFrame(updatePendulumCanvas);
 }
 
