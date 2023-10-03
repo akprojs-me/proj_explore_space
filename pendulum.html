@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>Pendulum Demo</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="pendulum demo">
+    <meta name="description"
+        content="demonstration of a pendulum, shows how changing design variables and external variables affects behavior of the system">
+    <!--Sets the width of the webpage to follow the screen width of the device-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+    <div class="top_nav pdemo">
+        <a href="#" , class="logo"><img src="images/blue-a-with-diamond-logo.svg" alt="nav bar menu logo" width="56"
+                height="57" id="nav-bar-menu-logo"></a>
+
+        <!-- Menu -->
+        <nav class="nav pdemo">
+            <ul class="menu pdemo">
+                <li><a href="./index.html" class="back-arrow" title="back-arrow">
+                    </a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="main">
+        <h1 id="pendulum_heading">Pendulum Demonstration</h1>
+        <div id="pendulum_description">
+            <p>A pendulum is a simple system consisting of a weight hung from a fixed point that can swing freely from
+                side
+                to side.</p>
+            <p>With this demo, see what behavior can be exhibited by this pendulum with variation of its design (mass
+                and
+                rod length), variables related to its surroundings (strength of gravitational field and effect of
+                friction),
+                and its initial condition (initial position/angle of the pendulum).</p>
+        </div>
+
+        <div id="pendulum-content">
+            <!--Input forms to control pendulum demo-->
+
+            <div class="pendulum_controls">
+                <h2>Pendulum Controls</h2>
+                <label for="length_input">Length (m)</label>
+                <input type="range" id="length_input" name="length" min="0.1" max="1" step="0.1" value="1"
+                    title="length_input">
+                <div class="selectedValue"></div>
+                <label for="mass_input">Mass (kg)</label>
+                <input type="range" id="mass_input" name="mass" min="0.1" max="1.5" step="0.1" value="1"
+                    title="mass_input">
+                <div class="selectedValue"></div>
+                <label for="angle_input">Initial Angle of the Pendulum (°)</label>
+                <input type="range" id="angle_input" name="angle" min="-90" max="90" step="1" value="0"
+                    title="angle_input">
+                <div id="angleDisplayedValue" class="selectedValue"></div>
+                <label for="gravity_input">Gravitational Acceleration (m/s<sup>2</sup>)</label>
+                <input type="range" id="gravity_input" name="gravity" min="0" max="25" step="0.01" value="9.81"
+                    title="gravity_input">
+                <div class="selectedValue"></div>
+                <label for="friction_input">Friction Damping Factor</label>
+                <input type="range" id="friction_input" name="friction" min="0" max="1" step="0.05" value="0"
+                    title="fraction_input">
+                <div class="selectedValue"></div>
+                <label for="solverSelect">Solver: </label>
+                <select id="solverSelect" name="solver">
+                    <option value="small_angle_approx">Small Angle Approximation</option>
+                    <option value="runge_kutta" selected>Runge-Kutta</option>
+                </select>
+            </div>
+            <div id="canvas-container">
+                <canvas id="pendulum-canvas" width="1000" height="800"></canvas>
+                <div id="plotting-area">
+                    <canvas id="plotting-canvas" width="1000" height="800"></canvas>
+                    <button id="clearButton">Clear</button>
+                </div>
+            </div>
+        </div>
+        <script src="pendulum.js"></script>
+
+</body>
+
+</html>
