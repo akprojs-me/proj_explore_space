@@ -231,7 +231,6 @@ function smallAngleApproxSim() {
             let B = -A * r;
             pendulumAngle = A * Math.exp(r * time) + B * time * Math.exp(r * time);
             console.log("with friction discriminant == 0, time: ", time, "pendulumAngle: ", pendulumAngle);
-
         }
     }
     requestAnimationFrame(updatePendulumCanvas);
@@ -240,10 +239,12 @@ function smallAngleApproxSim() {
 function eulersMethodSim() {
     let gravValue = document.getElementById("gravity_input").value;
     let length = document.getElementById("length_input").value;
+    let frictionFactor = document.getElementById("friction_input").value;
+    let mass = document.getElementById("mass_input").value;
     let h = timestep;
     let theta = pendulumAngle * (Math.PI / 180);
     const thetaNew = theta + h * angularVelocity;
-    const omegaNew = angularVelocity - (gravValue / length) * Math.sin(theta) * h;
+    const omegaNew = angularVelocity + (((-gravValue / length) * Math.sin(theta)) - (frictionFactor * angularVelocity / (mass * length ** 2))) * h;
     time = time + timestep;
     pendulumAngle = thetaNew * (180 / Math.PI);
     angularVelocity = omegaNew;
@@ -254,6 +255,8 @@ function eulersMethodSim() {
 function rungeKuttaSim() {
     let g = document.getElementById("gravity_input").value;
     let L = document.getElementById("length_input").value;
+    let frictionFactor = document.getElementById("friction_input").value;
+    let mass = document.getElementById("mass_input").value;
     let h = timestep;
     let omega = angularVelocity;
     let theta = pendulumAngle * (Math.PI / 180);
@@ -261,16 +264,16 @@ function rungeKuttaSim() {
 
     // Calculate the four RK4 increments
     const k1_theta = h * omega;
-    const k1_omega = h * (-(g / L) * Math.sin(theta));
+    const k1_omega = h * (-(g / L) * Math.sin(theta) - (frictionFactor * omega / (mass * L ** 2)));
 
     const k2_theta = h * (omega + 0.5 * k1_omega);
-    const k2_omega = h * (-(g / L) * Math.sin(theta + 0.5 * k1_theta));
+    const k2_omega = h * (-(g / L) * Math.sin(theta + 0.5 * k1_theta) - (frictionFactor * (omega + 0.5 * k1_omega) / (mass * L ** 2)));
 
     const k3_theta = h * (omega + 0.5 * k2_omega);
-    const k3_omega = h * (-(g / L) * Math.sin(theta + 0.5 * k2_theta));
+    const k3_omega = h * (-(g / L) * Math.sin(theta + 0.5 * k2_theta) - (frictionFactor * (omega + 0.5 * k2_omega) / (mass * L ** 2)));
 
     const k4_theta = h * (omega + k3_omega);
-    const k4_omega = h * (-(g / L) * Math.sin(theta + k3_theta));
+    const k4_omega = h * (-(g / L) * Math.sin(theta + k3_theta) - (frictionFactor * (omega + k3_omega) / (mass * L ** 2)));
 
     // Update theta and omega using the weighted average of the increments
     theta = theta + (k1_theta + 2 * k2_theta + 2 * k3_theta + k4_theta) / 6;
@@ -278,7 +281,6 @@ function rungeKuttaSim() {
     angularVelocity = omega;
     pendulumAngle = theta * (180 / Math.PI);
     requestAnimationFrame(updatePendulumCanvas)
-
 }
 
 function simulatePendulum() {
