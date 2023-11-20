@@ -11,7 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/stylesheet.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <!--Favicon Insertion Code-->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_package_v0.16/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_package_v0.16/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_package_v0.16/favicon-16x16.png">
+    <link rel="manifest" href="favicon_package_v0.16/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
@@ -73,10 +79,17 @@
             </div>
             <div id="canvas-container">
                 <canvas id="pendulum-canvas" width="1000" height="800"></canvas>
+
                 <div id="plotting-area">
-                    <canvas id="plotting-canvas" width="1000" height="800"></canvas>
-                    <button id="clearButton">Clear</button>
+                    <div id="angle-plot">
+                        <canvas id="plotting-canvas" width="1000" height="800"></canvas>
+                        <button id="clearButton">Clear Plots</button>
+                    </div>
+                    <div id="energy-plot">
+                        <canvas id="energy-canvas" width="1000" height="800"></canvas>
+                    </div>
                 </div>
+
             </div>
         </div>
         <script src="pendulum.js"></script>
