@@ -8,14 +8,18 @@ var angularVelocity = 0; // intial value for angular velocity
 var time = 0; // seconds
 const timestep = 0.005; // seconds, keeping this constant
 var scatterPlotData = {};
+var potEngPlotData = {};
+var kinEngPlotData = {};
 let simNum = 0;
 
 const defaultColors = ["#b30000", "#7c1158", "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"];
 const nColors = defaultColors.length;
 let plotDataSets = [{ label: "Sim 1", data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true }];
-
+let energyDataSets = [{ label: "Sim 1 PE", data: potEngPlotData, borderColor: defaultColors[(simNum * 2) % nColors], backgroundColor: defaultColors[(simNum * 2) % nColors], pointRadius: 3, showLine: true },
+{ label: "Sim 1 KE", data: kinEngPlotData, borderColor: defaultColors[(simNum * 2 + 1) % nColors], backgroundColor: defaultColors[(simNum * 2 + 1) % nColors], pointRadius: 3, showLine: true }];
 // Get the canvas element and create a Chart.js chart
 const plottingCanvas = document.getElementById('plotting-canvas').getContext('2d');
+const energyCanvas = document.getElementById('energy-canvas').getContext('2d');
 
 let angleChart = new Chart(plottingCanvas, {
     type: 'scatter',
@@ -42,9 +46,50 @@ let angleChart = new Chart(plottingCanvas, {
                     align: 'center'
                 }
             }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Angle Plot'
+            }
         }
     }
 });
+
+let energyChart = new Chart(energyCanvas, {
+    type: 'scatter',
+    data: {
+        datasets: energyDataSets,
+    },
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Time (s)',
+                    align: 'center'
+                },
+                grid: {
+                    display: false
+                },
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Energy (N)',
+                    align: 'center'
+                }
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Potential Energy (PE) and Kinetic Energy (KE) Plot'
+            }
+        }
+    }
+})
 
 // Draw out the state of the pendulum
 function updatePendulumCanvas() {
@@ -105,11 +150,9 @@ function updatePendulumCanvas() {
         else {
             const x = (event.clientX - rect.left) * canvas.width / rect.width;
             const y = (event.clientY - rect.top) * canvas.height / rect.height;
-            console.log("x: ", x, "y: ", y);
             isPointInPlay = ctx.isPointInPath(playButton, x, y);
         }
 
-        console.log("isPointInPlay: ", isPointInPlay);
         if (isPointInPlay && !simulationActive) {
             simulationActive = true;
             ctx.fillStyle = "#767676";
@@ -117,6 +160,14 @@ function updatePendulumCanvas() {
             ctx.fillStyle = "#8C8303";
             ctx.fill(stopButton);
             scatterPlotData = [{ x: time, y: pendulumAngle }];
+            kinEngPlotData = [{ x: time, y: 0 }];
+            let specifiedMass = document.getElementById("mass_input").value;
+            let gravValue = document.getElementById("gravity_input").value;
+            let specifiedLength = document.getElementById("length_input").value;
+            let angleRad = pendulumAngle * Math.PI / 180;
+            let height = specifiedLength - specifiedLength * Math.cos(angleRad);
+            let initialPE = specifiedMass * gravValue * height;
+            potEngPlotData = [{ x: time, y: initialPE }];
             simulatePendulum();
         }
 
@@ -154,7 +205,12 @@ function updatePendulumCanvas() {
             if (time > 0) {
                 simNum++;
                 scatterPlotData = [];
+                potEngPlotData = [];
+                kinEngPlotData = [];
                 plotDataSets.push({ label: "Sim " + (simNum + 1).toString(), data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true });
+                energyDataSets.push({ label: "Sim " + (simNum + 1).toString() + " PE", data: potEngPlotData, borderColor: defaultColors[(2 * simNum) % nColors], backgroundColor: defaultColors[(2 * simNum) % nColors], pointRadius: 3, showLine: true });
+                energyDataSets.push({ label: "Sim " + (simNum + 1).toString() + " KE", data: kinEngPlotData, borderColor: defaultColors[(2 * simNum + 1) % nColors], backgroundColor: defaultColors[(2 * simNum + 1) % nColors], pointRadius: 3, showLine: true });
+
             }
             angularVelocity = 0; // intial value for angular velocity
             time = 0; // seconds
@@ -247,7 +303,11 @@ function drawPendulum() {
             if (time > 0) {
                 simNum++;
                 scatterPlotData = [];
+                potEngPlotData = []
+                kinEngPlotData = [];
                 plotDataSets.push({ label: "Sim " + (simNum + 1).toString(), data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true });
+                energyDataSets.push({ label: "Sim " + (simNum + 1).toString() + " PE", data: potEngPlotData, borderColor: defaultColors[(simNum * 2) % nColors], backgroundColor: defaultColors[(simNum * 2) % nColors], pointRadius: 3, showLine: true })
+                energyDataSets.push({ label: "Sim " + (simNum + 1).toString() + " KE", data: kinEngPlotData, borderColor: defaultColors[(simNum * 2 + 1) % nColors], backgroundColor: defaultColors[(simNum * 2 + 1) % nColors], pointRadius: 3, showLine: true })
             }
             angularVelocity = 0; // intial value for angular velocity
             time = 0; // seconds
@@ -310,6 +370,7 @@ function drawPendulum() {
 
 function smallAngleApproxSim() {
     time = time + timestep;
+
     // Using small angle approximation (only really valid for small angles) - acts as a simple harmonic oscillator
     let gravValue = document.getElementById("gravity_input").value;
     let length = document.getElementById("length_input").value;
@@ -320,6 +381,7 @@ function smallAngleApproxSim() {
     // using initial conditions of at t = 0, initial angle is specifiedAngle, and angular velocity is 0
     if (frictionFactor == 0) {
         pendulumAngle = specifiedAngle * Math.cos(omega * time);
+        angularVelocity = specifiedAngle * -1 * Math.sin(omega * time) * omega;
     }
     else {
         // adding a term for friction where the frictionFactor is multiplied by angular velocity to get the torque related to friction
@@ -333,6 +395,7 @@ function smallAngleApproxSim() {
             let A = specifiedAngle / (1 - (r1 / r2));
             let B = (-A * r1) / r2;
             pendulumAngle = A * Math.exp(r1 * time) + B * Math.exp(r2 * time);
+            angularVelocity = A * Math.exp(r1 * time) * r1 + Math.exp(r2 * time) * r2;
             console.log("with friction discriminant > 0, time: ", time, "pendulumAngle: ", pendulumAngle);
         }
         else if (discriminant < 0) {
@@ -341,6 +404,7 @@ function smallAngleApproxSim() {
             let w = Math.sqrt(-1 * discriminant) / 2.0;
             console.log("v: ", v, "w: ", w);
             pendulumAngle = Math.exp(v * time) * (specifiedAngle * Math.cos(w * time) - (v * specifiedAngle / w) * Math.sin(w * time));
+            angularVelocity = Math.exp(v * time) * (specifiedAngle * -1 * Math.sin(w * time) * w - (v * specifiedAngle) * Math.cos(w * time)) + (specifiedAngle * Math.cos(w * time) - (v * specifiedAngle / w) * Math.sin(w * time)) * Math.exp(v * time) * v;
             console.log("with friction discriminant < 0, time: ", time, "pendulumAngle: ", pendulumAngle);
         }
         else {
@@ -349,14 +413,27 @@ function smallAngleApproxSim() {
             let A = specifiedAngle;
             let B = -A * r;
             pendulumAngle = A * Math.exp(r * time) + B * time * Math.exp(r * time);
+            angularVelocity = A * Math.exp(r * time) * r + B * time * Math.exp(r * time) * r + Math.exp(r * time) * B;
             console.log("with friction discriminant == 0, time: ", time, "pendulumAngle: ", pendulumAngle);
         }
     }
     scatterPlotData.push({ x: time.toFixed(2), y: pendulumAngle });
+    let angleRad = pendulumAngle * Math.PI / 180;
+    let height = length - length * Math.cos(angleRad);
+    let potEng = mass * gravValue * height;
+    potEngPlotData.push({ x: time.toFixed(2), y: potEng });
+    let velocity = length * (angularVelocity * Math.PI / 180);
+    let kinEng = 0.5 * mass * Math.pow(velocity, 2);
+    kinEngPlotData.push({ x: time.toFixed(2), y: kinEng });
+
     // Update the chart with new data
     angleChart.data.datasets[simNum].data = scatterPlotData;
+    energyChart.data.datasets[2 * simNum].data = potEngPlotData;
+    energyChart.data.datasets[2 * simNum + 1].data = kinEngPlotData;
+
     // Update the chart
     angleChart.update();
+    energyChart.update();
     requestAnimationFrame(updatePendulumCanvas);
 }
 
@@ -391,11 +468,21 @@ function rungeKuttaSim() {
     time = time + timestep;
 
     scatterPlotData.push({ x: time.toFixed(2), y: pendulumAngle });
+    let height = L - L * Math.cos(theta);
+    let potEng = mass * g * height;
+    potEngPlotData.push({ x: time.toFixed(2), y: potEng });
+    let velocity = L * angularVelocity;
+    let kinEng = 0.5 * mass * Math.pow(velocity, 2);
+    kinEngPlotData.push({ x: time.toFixed(2), y: kinEng });
 
     // Update the chart with new data
     angleChart.data.datasets[simNum].data = scatterPlotData;
+    energyChart.data.datasets[2 * simNum].data = potEngPlotData;
+    energyChart.data.datasets[2 * simNum + 1].data = kinEngPlotData;
+
     // Update the chart
     angleChart.update();
+    energyChart.update();
     requestAnimationFrame(updatePendulumCanvas)
 }
 
@@ -451,12 +538,16 @@ updatePendulumCanvas()
 document.getElementById("clearButton").addEventListener("touchstart", clearPlot);
 document.getElementById("clearButton").addEventListener("click", clearPlot);
 
+
 function clearPlot(event) {
     event.preventDefault();
     simNum = 0;
     angleChart.data.datasets = [{ label: "Sim 1", data: scatterPlotData, borderColor: defaultColors[simNum % nColors], backgroundColor: defaultColors[simNum % nColors], pointRadius: 3, showLine: true }];
     angleChart.update();
-
+    energyChart.data.datasets = [{ label: "Sim 1 PE", data: potEngPlotData, borderColor: defaultColors[(simNum * 2) % nColors], backgroundColor: defaultColors[(simNum * 2) % nColors], pointRadius: 3, showLine: true },
+    { label: "Sim 1 KE", data: kinEngPlotData, borderColor: defaultColors[(simNum * 2 + 1) % nColors], backgroundColor: defaultColors[(simNum * 2 + 1) % nColors], pointRadius: 3, showLine: true }];
+    energyChart.update();
 }
+
 
 
