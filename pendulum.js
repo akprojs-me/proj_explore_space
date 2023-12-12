@@ -18,8 +18,8 @@ let plotDataSets = [{ label: "Sim 1", data: scatterPlotData, borderColor: defaul
 let energyDataSets = [{ label: "Sim 1 PE", data: potEngPlotData, borderColor: defaultColors[(simNum * 2) % nColors], backgroundColor: defaultColors[(simNum * 2) % nColors], pointRadius: 3, showLine: true },
 { label: "Sim 1 KE", data: kinEngPlotData, borderColor: defaultColors[(simNum * 2 + 1) % nColors], backgroundColor: defaultColors[(simNum * 2 + 1) % nColors], pointRadius: 3, showLine: true }];
 // Get the canvas element and create a Chart.js chart
-const plottingCanvas = document.getElementById('plotting-canvas').getContext('2d');
-const energyCanvas = document.getElementById('energy-canvas').getContext('2d');
+const plottingCanvas = document.getElementById('pendulum-plotting-canvas').getContext('2d');
+const energyCanvas = document.getElementById('pendulum-energy-canvas').getContext('2d');
 
 let angleChart = new Chart(plottingCanvas, {
     type: 'scatter',

@@ -160,13 +160,12 @@ header h2 {
   font-size: clamp(1.3rem, 4vw + 0rem, 3rem);
 }
 
-#pendulum_heading {
-  color: #C2462E;
+.demo_heading {
   font-size: clamp(1.3rem, 4vw + 0rem, 2.6rem);
   text-align: center;
 }
 
-#pendulum_description {
+.demo_description {
   font-family: "EB Garamond", serif;
   font-size: clamp(1.0rem, 3vw + 0rem, 2rem);
   font-weight: 600;
@@ -301,11 +300,11 @@ footer {
   padding: 0;
 }
 
-#pendulum-content {
+.demo-content {
   border: 4px solid #505050;
 }
 
-.pendulum_controls {
+.demo_controls {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -314,18 +313,18 @@ footer {
   font-family: Heebo, sans-serif;
 }
 
-.pendulum_controls h2 {
+.demo_controls h2 {
   font-size: clamp(1.0rem, 3vw + 0rem, 2rem);
 
 }
 
-.pendulum_controls label {
+.demo_controls label {
   font-size: clamp(0.7rem, 3vw + 0rem, 1.5rem);
   font-weight: 500;
   display: block;
 }
 
-.pendulum_controls input {
+.demo_controls input {
   display: block;
 }
 
@@ -339,7 +338,7 @@ footer {
 }
 
 /* CSS for the canvas container */
-#canvas-container {
+.canvas-container {
   display: flex;
   width: 100%;
   height: auto;
@@ -349,20 +348,20 @@ footer {
 }
 
 /* CSS for the canvas */
-#pendulum-canvas {
+.demo-canvas {
   flex: 100%;
   max-width: 100%;
   max-height: 100%;
   border: 2px solid #707070;
 }
 
-#plotting-area {
+.plotting-area {
   flex: 100%;
   max-width: 100%;
   max-height: 100%;
 }
 
-#clearButton {
+.clearButton {
   margin: 3% 50%;
   font-family: Heebo, sans-serif;
 }
@@ -380,13 +379,13 @@ footer {
 @media screen and (min-width: 992px) {
 
   /* CSS for the canvas */
-  #pendulum-canvas {
+  .demo-canvas {
     flex: 60%;
     max-width: 60%;
     max-height: 50%;
   }
 
-  #plotting-area {
+  .plotting-area {
     flex: 40%;
     max-width: 40%;
     max-height: 50%;
@@ -456,7 +455,7 @@ footer {
     grid-area: 2 / 2 / span 1 / span 1;
   }
 
-  .pendulum_controls {
+  .demo_controls {
     display: grid;
     grid-template-columns: repeat(6, fr);
     grid-template-rows: auto, auto, auto;
@@ -464,17 +463,17 @@ footer {
     text-align: center;
   }
 
-  .pendulum_controls>h2 {
+  .demo_controls>h2 {
     grid-row: 1;
     grid-column: 1 / span 6;
   }
 
-  .pendulum_controls label {
+  .demo_controls label {
     display: block;
     grid-row: 2;
   }
 
-  .pendulum_controls input {
+  .demo_controls input {
     display: block;
     grid-row: 3
   }
